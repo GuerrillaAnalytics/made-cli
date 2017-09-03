@@ -1,4 +1,3 @@
-import sys
 import os.path
 import click
 import re
@@ -29,7 +28,6 @@ def is_project_initialised(folder_location):
         return False
     else:
         return True
-
 
 
 def make_folder_if_doesnt_exist(folder):
@@ -78,12 +76,11 @@ def project_create_folder(id, label):
 
     # TODO check id doesn't exist in same directory
 
-    project_location = os.path.join(os.getcwd(),project_name)
+    project_location = os.path.join(os.getcwd(), project_name)
     make_folder_if_doesnt_exist(project_location)
 
     if is_project_initialised(project_location) is False:
         click.confirm('Do you want to initialise a project here?', abort=True)
-
 
     # # Make the pm folder tree
     # pm_folder = make_folder_if_doesnt_exist(project_path, "pm")

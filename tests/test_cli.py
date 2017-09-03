@@ -1,5 +1,3 @@
-import sys
-import os.path
 import pytest
 from click.testing import CliRunner
 from made import cli
