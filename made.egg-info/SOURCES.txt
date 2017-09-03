@@ -1,0 +1,16 @@
+setup.cfg
+setup.py
+made/__init__.py
+made/cli.py
+made.egg-info/PKG-INFO
+made.egg-info/SOURCES.txt
+made.egg-info/dependency_links.txt
+made.egg-info/entry_points.txt
+made.egg-info/not-zip-safe
+made.egg-info/requires.txt
+made.egg-info/top_level.txt
+made/commands/__init__.py
+made/commands/cloudflare_grp/__init__.py
+made/commands/cloudflare_grp/cmd.py
+made/commands/uptime_grp/__init__.py
+made/commands/uptime_grp/cmd.py
