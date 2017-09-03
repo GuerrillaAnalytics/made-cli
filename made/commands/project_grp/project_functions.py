@@ -17,6 +17,8 @@ def check_project_name(project_name):
     if re.match(pattern, project_name) is None:
         raise ProjectException("Invalid format project name: " + project_name)
 
+    return project_name
+
 
 def is_project_initialised(folder_location):
     """Check a folder does not exist and can be created"""
@@ -82,6 +84,7 @@ def project_create_folder(id, label):
     if is_project_initialised(project_location) is False:
         click.confirm('Do you want to initialise a project here?', abort=True)
 
+    return project_location
     # # Make the pm folder tree
     # pm_folder = make_folder_if_doesnt_exist(project_path, "pm")
     #
