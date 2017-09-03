@@ -19,19 +19,25 @@ def check_project_name(project_name):
         raise ProjectException("Invalid format project name: " + project_name)
 
 
-def check_project_location(folder_location):
+def is_project_initialised(folder_location):
     """Check a folder does not exist and can be created"""
-    if not os.path.exists(folder_location):
-        raise OSError("Project folder location does not exist " + folder_location)
+
+    cfg = os.path.join(folder_location, "guerrilla.config")
+    # Folder exists and config exists
+    if not Path(cfg).exists():
+        click.echo(click.style("This project folder has not been initialised"))
+        return False
+    else:
+        return True
 
 
-def make_folder_if_doesnt_exist(parent_path, folder_name):
+
+def make_folder_if_doesnt_exist(folder):
     """Utility function to create a folder if it doesn't already exist"""
-    folder = os.path.join(parent_path, folder_name)
     if not os.path.exists(folder):
-        click.echo("creating folder " + folder_name)
         os.makedirs(folder)
-
+    else:
+        click.echo(click.style("The folder %s already exists" % folder, fg='yellow'))
     return folder
 
 
@@ -72,49 +78,21 @@ def project_create_folder(id, label):
 
     # TODO check id doesn't exist in same directory
 
-    make_folder_if_doesnt_exist(os.getcwd(), project_name)
+    project_location = os.path.join(os.getcwd(),project_name)
+    make_folder_if_doesnt_exist(project_location)
+
+    if is_project_initialised(project_location) is False:
+        click.confirm('Do you want to initialise a project here?', abort=True)
 
 
-def initialise_project(name, location):
-    """Command for initialising a project"""
-
-    # Check the project name is correct
-    try:
-        check_project_name(name)
-    except ProjectException as e:
-        click.echo(click.style(e.args[0], fg='red'))
-
-    # Check the project location exists
-    try:
-        check_project_location(location)
-    except OSError as e:
-        click.echo(click.style(e.args[0], fg='red'))
-
-    project_path = os.path.join(location, name)
-
-    # if the project folder does not exist, create it
-    if not os.path.exists(project_path):
-        os.makedirs(project_path)
-
-    cfg = os.path.join(location, name, "guerrilla.config")
-    # Folder exists and config exists
-    if Path(cfg).exists():
-        print("Found existing config")
-        click.confirm('A config file already exists in the folder. Do you want to continue?', abort=True)
-        build_project_config(cfg, existing=True)
-    else:
-        # Folder exists with no config
-        Path(cfg).touch()
-        build_project_config(cfg, existing=False)
-
-    # Make the pm folder tree
-    pm_folder = make_folder_if_doesnt_exist(project_path, "pm")
-
-    make_folder_if_doesnt_exist(pm_folder, "01_initiate")
-    make_folder_if_doesnt_exist(pm_folder, "02_plan")
-    make_folder_if_doesnt_exist(pm_folder, "03_execute")
-    make_folder_if_doesnt_exist(pm_folder, "04_control")
-    make_folder_if_doesnt_exist(pm_folder, "05_close")
-
-    make_folder_if_doesnt_exist(project_path, "wp")
-    pass
+    # # Make the pm folder tree
+    # pm_folder = make_folder_if_doesnt_exist(project_path, "pm")
+    #
+    # make_folder_if_doesnt_exist(pm_folder, "01_initiate")
+    # make_folder_if_doesnt_exist(pm_folder, "02_plan")
+    # make_folder_if_doesnt_exist(pm_folder, "03_execute")
+    # make_folder_if_doesnt_exist(pm_folder, "04_control")
+    # make_folder_if_doesnt_exist(pm_folder, "05_close")
+    #
+    # make_folder_if_doesnt_exist(project_path, "wp")
+    # pass

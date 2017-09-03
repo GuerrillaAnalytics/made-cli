@@ -22,7 +22,7 @@ def project_create():
     pass
 
 
-@project_create.command('folder')
+@project_create.command('folder', help = "create project folder with the correct format name")
 # @click.option('--ttl', '-t')
 @click.argument('id')
 @click.argument('label')
