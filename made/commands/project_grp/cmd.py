@@ -1,4 +1,5 @@
 import click
+# from made.commands.project_grp import project_functions
 
 
 @click.group()
@@ -7,13 +8,7 @@ def project(ctx):
     pass
 
 
-@project.group('zone')
-@click.pass_context
-def cloudflare_zone():
-    pass
-
-
-@cloudflare_zone.command('add')
+@project.command('temp')
 @click.option('--jumpstart', '-j', default=True)
 @click.option('--organization', '-o', default='')
 @click.argument('url')
@@ -22,23 +17,22 @@ def cloudflare_zone_add(ctx, url, jumpstart, organization):
     pass
 
 
-@project.group('record')
-def cloudflare_record():
+@project.group('create')
+def project_create():
     pass
 
 
-@cloudflare_record.command('add')
-@click.option('--ttl', '-t')
-@click.argument('domain')
-@click.argument('name')
-@click.argument('type')
-@click.argument('content')
+@project_create.command('folder')
+# @click.option('--ttl', '-t')
+@click.argument('id')
+@click.argument('label')
 @click.pass_obj
-def cloudflare_record_add(ctx, domain, name, type, content, ttl):
+def project_create_folder(ctx, id, label):
+    project_create(id, label)
     pass
 
 
-@cloudflare_record.command('edit')
+@project_create.command('edit')
 @click.option('--ttl', '-t')
 @click.argument('domain')
 @click.argument('name')

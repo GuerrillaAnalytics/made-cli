@@ -11,7 +11,7 @@ import os.path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from made.commands.project_grp.cmd import project
-from made.commands.uptime_grp.cmd import uptimerobot
+from made.commands.input_grp.cmd import input
 
 
 @click.group()
@@ -21,7 +21,7 @@ def cli():
 
 
 cli.add_command(project)
-cli.add_command(uptimerobot)
+cli.add_command(input)
 
 
 if __name__ == '__main__':
