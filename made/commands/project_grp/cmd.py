@@ -3,11 +3,11 @@ import click
 
 @click.group()
 @click.pass_context
-def cloudflare(ctx):
+def project(ctx):
     pass
 
 
-@cloudflare.group('zone')
+@project.group('zone')
 @click.pass_context
 def cloudflare_zone():
     pass
@@ -22,7 +22,7 @@ def cloudflare_zone_add(ctx, url, jumpstart, organization):
     pass
 
 
-@cloudflare.group('record')
+@project.group('record')
 def cloudflare_record():
     pass
 

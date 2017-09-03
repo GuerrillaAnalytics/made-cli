@@ -10,7 +10,7 @@ made.egg-info/not-zip-safe
 made.egg-info/requires.txt
 made.egg-info/top_level.txt
 made/commands/__init__.py
-made/commands/cloudflare_grp/__init__.py
-made/commands/cloudflare_grp/cmd.py
+made/commands/project_grp/__init__.py
+made/commands/project_grp/cmd.py
 made/commands/uptime_grp/__init__.py
 made/commands/uptime_grp/cmd.py
