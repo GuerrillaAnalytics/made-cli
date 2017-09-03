@@ -17,7 +17,7 @@ def cloudflare_zone_add(ctx, url, jumpstart, organization):
     pass
 
 
-@project.group('create')
+@project.group('create', help="create various project structures")
 def project_create():
     pass
 
