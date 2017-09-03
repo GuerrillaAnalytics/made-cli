@@ -1,3 +1,5 @@
+import sys
+import os.path
 import click
 import re
 import os
@@ -62,8 +64,9 @@ def build_project_config(cfg, existing):
         config.write(configfile)
 
 
-def create_folder(id, label):
+def project_create_folder(id, label):
     """Creates a project folder if possible in the current directory"""
+
     project_name = id.lower() + "_" + label.lower()
     check_project_name(project_name)
 

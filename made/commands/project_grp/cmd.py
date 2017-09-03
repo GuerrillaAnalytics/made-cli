@@ -1,5 +1,5 @@
 import click
-# from made.commands.project_grp import project_functions
+from made.commands.project_grp import project_functions as project_functions
 
 
 @click.group()
@@ -28,7 +28,7 @@ def project_create():
 @click.argument('label')
 @click.pass_obj
 def project_create_folder(ctx, id, label):
-    project_create(id, label)
+    project_functions.project_create_folder(id, label)
     pass
 
 
