@@ -10,12 +10,14 @@ def project(ctx):
 
 
 @project.command('init', help="Initialise a project")
-# @click.option('--jumpstart', '-j', default=True)
+@click.argument('folder', default=".", required=False)
 # @click.option('--organization', '-o', default='')
 # @click.argument('url')
 @click.pass_obj
-def project_init(ctx):
-    project_functions.project_init(project_folder_path=os.getcwd())
+def project_init(ctx, folder):
+    if folder == ".":
+        folder = os.getcwd()
+    project_functions.project_init(project_folder_path=folder)
     pass
 
 

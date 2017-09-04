@@ -1,4 +1,3 @@
-import os.path
 import click
 import re
 import os
@@ -45,8 +44,12 @@ def project_init(project_folder_path):
     """Creates a project configuration. Assumes current directory
     is root of project"""
 
+    config_file = os.path.join(project_folder_path, "made.config")
     config = configparser.ConfigParser()
-    config.read(os.path.join(project_folder_path,"made.config"))
+
+    if is_project_initialised(project_folder_path) is False:
+        with open(config_file, 'w') as configfile:
+            config.write(configfile)
 
     # Make the pm folder tree
     pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
@@ -94,8 +97,4 @@ def project_create_folder(id, label):
     project_location = os.path.join(os.getcwd(), project_name)
     make_folder_if_doesnt_exist(project_location)
 
-    if is_project_initialised(project_location) is False:
-        click.confirm('Do you want to initialise a project here?', abort=True)
-
     return project_location
-
