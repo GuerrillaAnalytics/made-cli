@@ -70,7 +70,6 @@ def project_init(project_folder_path):
 
     # Make the pm folder tree
     pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
-
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "01_initiate"))
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "02_plan"))
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "03_execute"))
@@ -78,6 +77,7 @@ def project_init(project_folder_path):
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "05_close"))
 
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
+    make_folder_if_doesnt_exist(os.path.join(project_folder_path, "inputs"))
 
     project_init_wp(config)
     with open(config_file, 'w') as configfile:

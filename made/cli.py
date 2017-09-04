@@ -11,7 +11,7 @@ import os.path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from made.commands.project_grp.cmd import project
-from made.commands.input_grp.cmd import input
+from made.commands.inputs_grp.cmd import input
 
 
 @click.group()

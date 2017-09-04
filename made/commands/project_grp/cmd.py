@@ -34,14 +34,3 @@ def project_create():
 def project_create_folder(ctx, id, label):
     project_functions.project_create_folder(id, label)
     pass
-
-
-@project_create.command('edit')
-@click.option('--ttl', '-t')
-@click.argument('domain')
-@click.argument('name')
-@click.argument('type')
-@click.argument('content')
-@click.pass_obj
-def cloudflare_record_edit(ctx, domain):
-    pass

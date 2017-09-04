@@ -10,8 +10,9 @@ made.egg-info/not-zip-safe
 made.egg-info/requires.txt
 made.egg-info/top_level.txt
 made/commands/__init__.py
-made/commands/input_grp/__init__.py
-made/commands/input_grp/cmd.py
+made/commands/inputs_grp/__init__.py
+made/commands/inputs_grp/cmd.py
+made/commands/inputs_grp/inputs_functions.py
 made/commands/project_grp/__init__.py
 made/commands/project_grp/cmd.py
 made/commands/project_grp/project_functions.py
