@@ -23,7 +23,7 @@ def check_project_name(project_name):
 def is_project_initialised(folder_location):
     """Check a folder does not exist and can be created"""
 
-    cfg = os.path.join(folder_location, "guerrilla.config")
+    cfg = os.path.join(folder_location, "made.config")
     # Folder exists and config exists
     if not Path(cfg).exists():
         click.echo(click.style("This project folder has not been initialised"))
@@ -41,33 +41,46 @@ def make_folder_if_doesnt_exist(folder):
     return folder
 
 
-def build_project_config(cfg, existing):
-    """Creates a project configuration"""
+def project_init(project_folder_path):
+    """Creates a project configuration. Assumes current directory
+    is root of project"""
 
     config = configparser.ConfigParser()
-    config.read(cfg)
+    config.read(os.path.join(project_folder_path,"made.config"))
 
-    section_name = "PostgreSQL"
+    # Make the pm folder tree
+    pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
 
-    # if it has the section, ask if user should reconfigure or remove
-    if config.has_section(section_name):
-        reconfigure_answer = click.confirm("Do you wish to keep the PostgreSQL configuration?")
-        if reconfigure_answer is True:
-            option_name = "port"
-            question = "Please enter a port number"
-            if config.has_option(section_name, option_name, ):
-                option_value = config.get(section_name, option_name)
-                option_value = click.prompt(question, default=option_value)
-                config.set(section_name, option_name, option_value)
-        else:
-            config.remove_section(section_name)
-    else:
-        reconfigure_answer = click.confirm("Do you wish to configure PostgreSQL?")
-        if reconfigure_answer is True:
-            config.add_section(section_name)
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "01_initiate"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "02_plan"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "03_execute"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "04_control"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "05_close"))
 
-    with open('cfg', 'wt') as configfile:
-        config.write(configfile)
+    make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
+    pass
+
+    # section_name = "PostgreSQL"
+    #
+    # # if it has the section, ask if user should reconfigure or remove
+    # if config.has_section(section_name):
+    #     reconfigure_answer = click.confirm("Do you wish to keep the PostgreSQL configuration?")
+    #     if reconfigure_answer is True:
+    #         option_name = "port"
+    #         question = "Please enter a port number"
+    #         if config.has_option(section_name, option_name, ):
+    #             option_value = config.get(section_name, option_name)
+    #             option_value = click.prompt(question, default=option_value)
+    #             config.set(section_name, option_name, option_value)
+    #     else:
+    #         config.remove_section(section_name)
+    # else:
+    #     reconfigure_answer = click.confirm("Do you wish to configure PostgreSQL?")
+    #     if reconfigure_answer is True:
+    #         config.add_section(section_name)
+    #
+    # with open('cfg', 'wt') as configfile:
+    #     config.write(configfile)
 
 
 def project_create_folder(id, label):
@@ -85,14 +98,4 @@ def project_create_folder(id, label):
         click.confirm('Do you want to initialise a project here?', abort=True)
 
     return project_location
-    # # Make the pm folder tree
-    # pm_folder = make_folder_if_doesnt_exist(project_path, "pm")
-    #
-    # make_folder_if_doesnt_exist(pm_folder, "01_initiate")
-    # make_folder_if_doesnt_exist(pm_folder, "02_plan")
-    # make_folder_if_doesnt_exist(pm_folder, "03_execute")
-    # make_folder_if_doesnt_exist(pm_folder, "04_control")
-    # make_folder_if_doesnt_exist(pm_folder, "05_close")
-    #
-    # make_folder_if_doesnt_exist(project_path, "wp")
-    # pass
+

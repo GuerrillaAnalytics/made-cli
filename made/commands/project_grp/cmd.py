@@ -1,5 +1,6 @@
 import click
 from made.commands.project_grp import project_functions as project_functions
+import os
 
 
 @click.group()
@@ -8,12 +9,13 @@ def project(ctx):
     pass
 
 
-@project.command('temp')
-@click.option('--jumpstart', '-j', default=True)
-@click.option('--organization', '-o', default='')
-@click.argument('url')
+@project.command('init', help="Initialise a project")
+# @click.option('--jumpstart', '-j', default=True)
+# @click.option('--organization', '-o', default='')
+# @click.argument('url')
 @click.pass_obj
-def cloudflare_zone_add(ctx, url, jumpstart, organization):
+def project_init(ctx):
+    project_functions.project_init(project_folder_path=os.getcwd())
     pass
 
 
