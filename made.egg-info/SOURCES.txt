@@ -10,6 +10,7 @@ made.egg-info/not-zip-safe
 made.egg-info/requires.txt
 made.egg-info/top_level.txt
 made/commands/__init__.py
+made/commands/inputs_grp/InputException.py
 made/commands/inputs_grp/__init__.py
 made/commands/inputs_grp/cmd.py
 made/commands/inputs_grp/inputs_functions.py
