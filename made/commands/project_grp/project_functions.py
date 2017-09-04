@@ -40,6 +40,23 @@ def make_folder_if_doesnt_exist(folder):
     return folder
 
 
+def project_init_wp(configParser):
+    """Initialise the work product prefix you want to use"""
+    section_name = "work_products"
+    option_name = "prefix"
+    option_value = "wp"
+
+    # if the option has been set before, grab the value
+    if configParser.has_section(section_name):
+        if configParser.has_option(section_name, option_name):
+            option_value = configParser.get(section_name, option_name)
+    else:
+        configParser.add_section(section_name)
+
+    option_value = click.prompt("Enter a work_product prefix", default=option_value, type=str)
+    configParser.set(section_name, option_name, option_value)
+
+
 def project_init(project_folder_path):
     """Creates a project configuration. Assumes current directory
     is root of project"""
@@ -47,9 +64,9 @@ def project_init(project_folder_path):
     config_file = os.path.join(project_folder_path, "made.config")
     config = configparser.ConfigParser()
 
+    # Create a blank file
     if is_project_initialised(project_folder_path) is False:
-        with open(config_file, 'w') as configfile:
-            config.write(configfile)
+        open(config_file, 'a').close()
 
     # Make the pm folder tree
     pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
@@ -61,6 +78,10 @@ def project_init(project_folder_path):
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "05_close"))
 
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
+
+    project_init_wp(config)
+    with open(config_file, 'w') as configfile:
+        config.write(configfile)
     pass
 
     # section_name = "PostgreSQL"
