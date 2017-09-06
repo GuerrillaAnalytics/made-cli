@@ -18,5 +18,7 @@ made/commands/project_grp/__init__.py
 made/commands/project_grp/cmd.py
 made/commands/project_grp/project_functions.py
 tests/commands/__init__.py
+tests/commands/inputs_grp/__init__.py
+tests/commands/inputs_grp/test_inputs_functions.py
 tests/commands/project_grp/__init__.py
 tests/commands/project_grp/test_project_functions.py

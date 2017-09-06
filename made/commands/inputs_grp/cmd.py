@@ -1,4 +1,5 @@
 import click
+import os
 from made.commands.inputs_grp import inputs_functions as input_functions
 
 
@@ -14,7 +15,12 @@ def input(ctx):
 # @click.argument('url')
 @click.pass_obj
 def input_create(ctx):
-    input_functions.input_create("inp23", "spreadies", "tab", 1)
+    user_root = os.getcwd()
+    user_source_id = click.prompt('Please enter an input ID', type=str)
+    user_source_name = click.prompt('Please enter a schema name to load into', type=str)
+    user_version = click.prompt('Please enter a version', type=int)
+    input_functions.input_create(root_folder=user_root, source_id=user_source_id, source_name=user_source_name,
+                                 version=user_version)
     pass
 
 
