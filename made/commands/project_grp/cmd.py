@@ -34,3 +34,20 @@ def project_create():
 def project_create_folder(ctx, id, label):
     project_functions.project_create_folder(id, label)
     pass
+
+
+@project.group('audit', help="audit project structures")
+def project_audit():
+    pass
+
+
+@project_audit.command('name', help="audit project folder name")
+@click.pass_obj
+def project_audit_name(ctx):
+
+    if project_functions.is_project_initialised(os.getcwd()):
+        if not project_functions.project_audit_name():
+            click.echo("Project folder name does not match the correct pattern")
+    else:
+        click.echo("You are not in an initialised project folder")
+    pass

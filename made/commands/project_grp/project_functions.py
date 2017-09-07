@@ -127,3 +127,16 @@ def project_create_folder(id, label):
     make_folder_if_doesnt_exist(project_location)
 
     return project_location
+
+
+def project_audit_name():
+    """ Audit the project folder name"""
+
+    project_folder_name = os.getcwd()
+    print(project_folder_name)
+    pattern = re.compile("^ds[0-9]{3}(_([a-za-z0-9])*)?")
+
+    if re.match(pattern, project_folder_name):
+       return True
+    else:
+        return False
