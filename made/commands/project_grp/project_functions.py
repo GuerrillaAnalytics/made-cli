@@ -137,6 +137,6 @@ def project_audit_name():
     pattern = re.compile("^ds[0-9]{3}(_([a-za-z0-9])*)?")
 
     if re.match(pattern, project_folder_name):
-       return True
+        return True
     else:
         return False

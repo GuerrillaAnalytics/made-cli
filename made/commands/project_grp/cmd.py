@@ -51,3 +51,9 @@ def project_audit_name(ctx):
     else:
         click.echo("You are not in an initialised project folder")
     pass
+
+
+@project_audit.command('tree', help="audit project folder tree")
+@click.pass_obj
+def project_audit_tree(ctx):
+    pass
