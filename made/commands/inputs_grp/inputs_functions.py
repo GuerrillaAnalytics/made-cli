@@ -21,12 +21,24 @@ def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
 
 def input_create(root_folder, source_id, source_name, version):
     """Creates an input folder tree in the correct structure"""
-    path = input_build_name(source_id, source_name, version)
+
+    raw_path = input_build_name(source_id, source_name, version, "raw")
+    formatted_path = input_build_name(source_id, source_name, version, "formatted")
+
     try:
-        os.makedirs(os.path.join(root_folder, path))
+        os.makedirs(os.path.join(root_folder, raw_path))
     except OSError as exc:  # Python >2.5
-        if exc.errno == errno.EEXIST and os.path.isdir(path):
+        if exc.errno == errno.EEXIST and os.path.isdir(raw_path):
             pass
         else:
             raise
+
+    try:
+        os.makedirs(os.path.join(root_folder, formatted_path))
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(formatted_path):
+            pass
+        else:
+            raise
+
     pass
