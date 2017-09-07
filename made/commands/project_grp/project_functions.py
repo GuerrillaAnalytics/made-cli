@@ -41,7 +41,9 @@ def make_folder_if_doesnt_exist(folder):
 
 
 def project_init_wp(configParser):
-    """Initialise the work product prefix you want to use"""
+    """Initialise the work product prefix you want to use into
+    a configParser"""
+
     section_name = "work_products"
     option_name = "prefix"
     option_value = "wp"
@@ -57,6 +59,18 @@ def project_init_wp(configParser):
     configParser.set(section_name, option_name, option_value)
 
 
+def project_init_pm_folder(project_folder_path):
+    """Create a pm folder tree in a given project folder"""
+
+    # Make the pm folder tree
+    pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "01_initiate"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "02_plan"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "03_execute"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "04_control"))
+    make_folder_if_doesnt_exist(os.path.join(pm_folder, "05_close"))
+
+
 def project_init(project_folder_path):
     """Creates a project configuration. Assumes current directory
     is root of project"""
@@ -68,13 +82,7 @@ def project_init(project_folder_path):
     if is_project_initialised(project_folder_path) is False:
         open(config_file, 'a').close()
 
-    # Make the pm folder tree
-    pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
-    make_folder_if_doesnt_exist(os.path.join(pm_folder, "01_initiate"))
-    make_folder_if_doesnt_exist(os.path.join(pm_folder, "02_plan"))
-    make_folder_if_doesnt_exist(os.path.join(pm_folder, "03_execute"))
-    make_folder_if_doesnt_exist(os.path.join(pm_folder, "04_control"))
-    make_folder_if_doesnt_exist(os.path.join(pm_folder, "05_close"))
+    project_init_pm_folder(project_folder_path)
 
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "inputs"))

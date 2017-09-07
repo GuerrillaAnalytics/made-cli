@@ -14,4 +14,5 @@ def test_project_create_folder():
     new_folder = project_create_folder(id="ds134", label="project")
     expected_path = os.path.join(location, "ds134" + "_" + "project")
     shutil.rmtree(location)
+
     assert expected_path == new_folder
