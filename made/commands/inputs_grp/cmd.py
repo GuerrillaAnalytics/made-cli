@@ -1,6 +1,6 @@
 import click
 import os
-from made.commands.inputs_grp import inputs_functions as input_functions
+from made.commands.inputs_grp import inputs_functions
 
 
 @click.group()
@@ -39,13 +39,13 @@ def input_create(ctx):
             continue
         break
 
-    input_functions.input_create(root_folder=user_root, source_id=user_source_id, source_name=user_source_name,
-                                 version=user_version)
+    inputs_functions.input_create(root_folder=user_root, source_id=user_source_id, source_name=user_source_name,
+                                  version=user_version)
     pass
 
 
-@input.command('delete')
-@click.argument('names', nargs=-1, required=True)
+@input.command('audit')
 @click.pass_obj
-def uptimerobot_delete(ctx, names):
+def input_audit(ctx):
+    inputs_functions.input_audit_path(os.getcwd())
     pass

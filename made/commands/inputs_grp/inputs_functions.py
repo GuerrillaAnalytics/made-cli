@@ -1,5 +1,6 @@
 import errno
 import os
+import re
 
 
 def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
@@ -42,3 +43,28 @@ def input_create(root_folder, source_id, source_name, version):
             raise
 
     pass
+
+
+def input_audit_path(input_base_folder):
+    """ AUdit an input folder to check it
+    has the right path formats"""
+    result = []
+
+    # Check base name is correct
+
+    # Check subfolders only of format dd
+    subfolders = os.listdir(input_base_folder)
+    for item in subfolders:
+        if not os.path.isdir(item):
+            tup = ("ERR0001", item, "Unexpected file in input folder")
+            result.append(tup)
+        else:
+            pattern = re.compile("^[0-9]{3}$")
+
+            # Test the folder has an acceptable name
+            matchResult = re.match(pattern, item)
+            if matchResult is None:
+                tup = ("ERR0002", item, "Incorrectly formatted input version folder")
+                result.append(tup)
+
+    return result

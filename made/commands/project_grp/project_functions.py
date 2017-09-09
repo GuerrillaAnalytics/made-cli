@@ -133,3 +133,8 @@ def project_audit_name(project_folder):
     else:
         print("Matched: " + str(matchResult.group(0)))
         return True
+
+
+def project_audit_tree(project_folder):
+    """Check that a project tree has correct structure"""
+    pass
