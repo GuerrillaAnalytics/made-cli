@@ -9,16 +9,6 @@ class ProjectException(Exception):
     pass
 
 
-def check_project_name(project_name):
-    """Check project name matches a pattern."""
-    pattern = re.compile("^ds[0-9]{3}(_([a-zA-Z0-9])*)?")
-
-    if re.match(pattern, project_name) is None:
-        raise ProjectException("Invalid format project name: " + project_name)
-
-    return project_name
-
-
 def is_project_initialised(folder_location):
     """Check a folder does not exist and can be created"""
 
@@ -119,7 +109,7 @@ def project_create_folder(id, label):
     """Creates a project folder if possible in the current directory"""
 
     project_name = id.lower() + "_" + label.lower()
-    check_project_name(project_name)
+    project_audit_name(project_folder=project_name)
 
     # TODO check id doesn't exist in same directory
 
@@ -129,14 +119,17 @@ def project_create_folder(id, label):
     return project_location
 
 
-def project_audit_name():
+def project_audit_name(project_folder):
     """ Audit the project folder name"""
 
-    project_folder_name = os.getcwd()
-    print(project_folder_name)
-    pattern = re.compile("^ds[0-9]{3}(_([a-za-z0-9])*)?")
+    project_folder = os.path.basename(project_folder)
+    print("Project folder: " + project_folder)
+    pattern = re.compile("^ds[0-9]{3}_[[a-z0-9]*]?$")
 
-    if re.match(pattern, project_folder_name):
-        return True
-    else:
+    # Test the folder has an acceptable name
+    matchResult = re.match(pattern, project_folder)
+    if matchResult is None:
         return False
+    else:
+        print("Matched: " + str(matchResult.group(0)))
+        return True

@@ -46,7 +46,7 @@ def project_audit():
 def project_audit_name(ctx):
 
     if project_functions.is_project_initialised(os.getcwd()):
-        if not project_functions.project_audit_name():
+        if not project_functions.project_audit_name(project_folder=os.getcwd()):
             click.echo("Project folder name does not match the correct pattern")
     else:
         click.echo("You are not in an initialised project folder")
