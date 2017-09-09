@@ -46,7 +46,7 @@ def input_create(root_folder, source_id, source_name, version):
 
 
 def input_audit_path(input_base_folder):
-    """ AUdit an input folder to check it
+    """ Audit an input folder to check it
     has the right path formats"""
     result = []
 
@@ -54,6 +54,10 @@ def input_audit_path(input_base_folder):
 
     # Check subfolders only of format dd
     subfolders = os.listdir(input_base_folder)
+    if len(subfolders) == 0:
+        tup = ("ERR0003", input_base_folder, "Base folder contains files")
+        result.append(tup)
+
     for item in subfolders:
         if not os.path.isdir(item):
             tup = ("ERR0001", item, "Unexpected file in input folder")
