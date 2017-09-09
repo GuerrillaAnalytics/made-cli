@@ -1,7 +1,7 @@
 import click
 import os
 from made.commands.inputs_grp import inputs_functions
-
+from made import utils
 
 @click.group()
 @click.pass_context
@@ -47,5 +47,6 @@ def input_create(ctx):
 @input.command('audit')
 @click.pass_obj
 def input_audit(ctx):
-    inputs_functions.input_audit_path(os.getcwd())
+    audit_result = inputs_functions.input_audit_path(os.getcwd())
+    utils.pretty_print(audit_result)
     pass
