@@ -23,8 +23,8 @@ def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
 def input_create(root_folder, source_id, source_name, version):
     """Creates an input folder tree in the correct structure"""
 
+    # Create the raw folder path
     raw_path = input_build_name(source_id, source_name, version, "raw")
-    formatted_path = input_build_name(source_id, source_name, version, "formatted")
 
     try:
         os.makedirs(os.path.join(root_folder, raw_path))
@@ -33,6 +33,9 @@ def input_create(root_folder, source_id, source_name, version):
             pass
         else:
             raise
+
+    # Create the formatter folder path
+    formatted_path = input_build_name(source_id, source_name, version, "formatted")
 
     try:
         os.makedirs(os.path.join(root_folder, formatted_path))
@@ -47,22 +50,28 @@ def input_create(root_folder, source_id, source_name, version):
 
 def input_audit_path(input_base_folder):
     """ Audit an input folder to check it
-    has the right path formats"""
+    has the right path formats
+    * no files present
+    * only folders with a 2 digit version number
+    """
     result = []
 
     # Check base name is correct
 
     # Check subfolders only of format dd
-    subfolders = os.listdir(input_base_folder)
-    if len(subfolders) == 0:
-        tup = ("ERR0003", input_base_folder, "Base folder contains files")
+    files_and_dirs_in_folder = os.listdir(input_base_folder)
+    if len(files_and_dirs_in_folder) == 0:
+        tup = ("ERR0003", input_base_folder, "Base folder contains no folders")
         result.append(tup)
 
-    for item in subfolders:
+    # Check there are no files in the inputs folder
+    for item in files_and_dirs_in_folder:
+        # if it's not a directory (i.e. it's a file
         if not os.path.isdir(item):
             tup = ("ERR0001", item, "Unexpected file in input folder")
             result.append(tup)
         else:
+            # Else if it is a directory, check it has correct format
             pattern = re.compile("^[0-9]{3}$")
 
             # Test the folder has an acceptable name
@@ -70,5 +79,23 @@ def input_audit_path(input_base_folder):
             if matchResult is None:
                 tup = ("ERR0002", item, "Incorrectly formatted input version folder")
                 result.append(tup)
+
+            # Check each version folder only has a formatted or raw subfolder, no files
+            # and not other subfolders
+            version_subfolders = os.listdir(item)
+            if len(version_subfolders) == 0:
+                tup = ("ERR0004", version_subfolders, "Version folder contains no raw or formatted subfolder")
+                result.append(tup)
+
+            else:
+                for version_subfolder in version_subfolders:
+                    # if there is a file, then error
+                    if not os.path.isdir(version_subfolder):
+                        tup = ("ERR0006", version_subfolder, "Unexpected file in version folder")
+                        result.append(tup)
+                    else:
+                        if version_subfolder != "formatted" and version_subfolder != "raw":
+                            tup = ("ERR0007", version_subfolder, "Unexpected folder in version folder")
+                            result.append(tup)
 
     return result

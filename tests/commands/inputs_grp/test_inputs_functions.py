@@ -6,6 +6,7 @@ import pytest
 
 from made.commands.inputs_grp.inputs_functions import input_audit_path
 from made.commands.inputs_grp.inputs_functions import input_build_name
+from made.commands.inputs_grp.inputs_functions import input_create
 
 
 def test_input_build_name():
@@ -35,8 +36,8 @@ def test_input_audit_path_wrong_subfolder():
     result = input_audit_path(input_base_folder=location)
     shutil.rmtree(location)
 
-    assert len(result) == 1
-    assert result[0][0] == "ERR0002"
+    assert len(result) >= 1
+    assert any("ERR0002" in code for code in result)
 
 
 def test_input_audit_path_file_in_subfolder():
@@ -60,8 +61,8 @@ def test_input_audit_path_file_in_subfolder():
     result = input_audit_path(input_base_folder=location)
     shutil.rmtree(location)
 
-    assert len(result) == 1
-    assert result[0][0] == "ERR0001"
+    assert len(result) >= 1
+    assert any("ERR0001" in code for code in result)
 
 
 def test_input_audit_path_empty_subfolder():
@@ -71,5 +72,35 @@ def test_input_audit_path_empty_subfolder():
     result = input_audit_path(input_base_folder=location)
     shutil.rmtree(location)
 
-    assert len(result) == 1
+    assert len(result) >= 1
     assert result[0][0] == "ERR0003"
+
+
+def test_input_audit_version_folder_contains_file():
+    """
+    Check that version subfolder has error if it contains a file
+    """
+    location = tempfile.mkdtemp()
+    os.chdir(location)
+
+    input_create(location, "i002", "input_source", "03")
+    version_folder = os.path.join(location, "i002" + "_" + "input_source", "03")
+    print(version_folder)
+    print(location)
+    os.chdir(version_folder)
+
+    # Create a file that should cause an error
+    try:
+        os.open("error_file.txt", os.O_CREAT)
+    except OSError as e:
+        if e.errno == errno.EEXIST:  # Failed as the file already exists.
+            pass
+        else:  # Something unexpected went wrong so reraise the exception.
+            raise
+
+    result = input_audit_path(location)
+
+    shutil.rmtree(location)
+
+    assert len(result) >= 1
+    assert result[0][0] == "ERR0006"

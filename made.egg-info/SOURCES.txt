@@ -2,6 +2,7 @@ setup.cfg
 setup.py
 made/__init__.py
 made/cli.py
+made/utils.py
 made.egg-info/PKG-INFO
 made.egg-info/SOURCES.txt
 made.egg-info/dependency_links.txt

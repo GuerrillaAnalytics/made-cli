@@ -3,6 +3,7 @@ import os
 from made.commands.inputs_grp import inputs_functions
 from made import utils
 
+
 @click.group()
 @click.pass_context
 def input(ctx):
