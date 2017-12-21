@@ -84,10 +84,11 @@ def test_input_audit_version_folder_contains_file():
     os.chdir(location)
 
     input_create(location, "i002", "input_source", "03")
-    version_folder = os.path.join(location, "i002" + "_" + "input_source", "03")
-    print(version_folder)
+    version_folder_path = os.path.join(location, "i002" + "_" + "input_source", "03")
+    print("Version folder:" + version_folder_path)
     print(location)
-    os.chdir(version_folder)
+    os.mkdir(version_folder_path)
+    os.chdir(version_folder_path)
 
     # Create a file that should cause an error
     try:
@@ -103,4 +104,4 @@ def test_input_audit_version_folder_contains_file():
     shutil.rmtree(location)
 
     assert len(result) >= 1
-    assert result[0][0] == "ERR0006"
+    assert result[0][0] == "ERR0001"
