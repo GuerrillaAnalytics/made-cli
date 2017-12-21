@@ -4,7 +4,9 @@ dist/
 build/
 *.egg-info/
 made.egg-info/
-
+flake8/
+py35
+get-pip.py
 .tox/
 .coverage
 .idea
