@@ -2,7 +2,7 @@ import click
 from made.commands.project_grp import project_functions as project_functions
 import os
 
-from made.utils import Config
+from made.utils import config
 
 
 @click.group()
@@ -20,7 +20,7 @@ def project_init(ctx, folder):
     if folder == ".":
         folder = os.getcwd()
 
-    config = Config(folder)
+    config = config.Config(folder)
     config.has_config_file()
 
     # Enter a project root folder
@@ -48,9 +48,10 @@ def project_init(ctx, folder):
         config.add_option_wp_prefix(work_product_prefix)
         break
 
+    # save the configuration
     config.write()
 
-    # project_functions.project_init(project_folder_path=folder)
+    project_functions.project_init(project_folder_path=folder)
     pass
 
 

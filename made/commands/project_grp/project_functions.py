@@ -3,7 +3,6 @@ import re
 
 import click
 from pathlib import Path
-import made.utils.Config
 
 
 class ProjectException(Exception):
@@ -31,25 +30,6 @@ def make_folder_if_doesnt_exist(folder):
     return folder
 
 
-def project_init_wp(configParser):
-    """Initialise the work product settings you want to use into
-    a configParser"""
-
-    section_name = "work_products"
-    option_name = "prefix"
-    option_value = "wp"
-
-    # if the option has been set before, grab the value to use later in the command prompt
-    if configParser.has_section(section_name):
-        if configParser.has_option(section_name, option_name):
-            option_value = configParser.get(section_name, option_name)
-    else:
-        configParser.add_section(section_name)
-
-    option_value = click.prompt("Enter a work_product prefix", default=option_value, type=str)
-    configParser.set(section_name, option_name, option_value)
-
-
 def project_init_pm_folder(project_folder_path):
     """Create a pm folder tree in a given project folder"""
 
@@ -73,9 +53,6 @@ def project_init(project_folder_path):
     # create other folder structures
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "inputs"))
-
-    config = made.utils.Config(project_folder_path)
-    project_init_wp(config)
 
     pass
 
