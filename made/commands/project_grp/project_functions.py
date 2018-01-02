@@ -1,8 +1,9 @@
-import click
-import re
 import os
+import re
+
+import click
 from pathlib import Path
-import configparser
+import made.utils.Config
 
 
 class ProjectException(Exception):
@@ -66,13 +67,6 @@ def project_init(project_folder_path):
     Assumes current directory
     is root of project"""
 
-    config_file = os.path.join(project_folder_path, "made.config")
-    config = configparser.ConfigParser()
-
-    # Create a blank config file if one does not exists already
-    if is_project_initialised(project_folder_path) is False:
-        open(config_file, 'a').close()
-
     # create the pm folder structure
     project_init_pm_folder(project_folder_path)
 
@@ -80,33 +74,10 @@ def project_init(project_folder_path):
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "inputs"))
 
+    config = made.utils.Config(project_folder_path)
     project_init_wp(config)
-    with open(config_file, 'w') as configfile:
-        config.write(configfile)
 
     pass
-
-    # section_name = "PostgreSQL"
-    #
-    # # if it has the section, ask if user should reconfigure or remove
-    # if config.has_section(section_name):
-    #     reconfigure_answer = click.confirm("Do you wish to keep the PostgreSQL configuration?")
-    #     if reconfigure_answer is True:
-    #         option_name = "port"
-    #         question = "Please enter a port number"
-    #         if config.has_option(section_name, option_name, ):
-    #             option_value = config.get(section_name, option_name)
-    #             option_value = click.prompt(question, default=option_value)
-    #             config.set(section_name, option_name, option_value)
-    #     else:
-    #         config.remove_section(section_name)
-    # else:
-    #     reconfigure_answer = click.confirm("Do you wish to configure PostgreSQL?")
-    #     if reconfigure_answer is True:
-    #         config.add_section(section_name)
-    #
-    # with open('cfg', 'wt') as configfile:
-    #     config.write(configfile)
 
 
 def project_create_folder(id, label):

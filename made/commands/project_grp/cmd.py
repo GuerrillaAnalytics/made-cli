@@ -17,6 +17,7 @@ def project(ctx):
 def project_init(ctx, folder):
     if folder == ".":
         folder = os.getcwd()
+
     project_functions.project_init(project_folder_path=folder)
     pass
 
