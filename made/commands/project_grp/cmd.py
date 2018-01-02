@@ -9,7 +9,7 @@ def project(ctx):
     pass
 
 
-@project.command('init', help="Initialise a project")
+@project.command('init', help="Initialise a project configuration")
 @click.argument('folder', default=".", required=False)
 # @click.option('--organization', '-o', default='')
 # @click.argument('url')

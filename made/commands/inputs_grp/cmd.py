@@ -16,6 +16,7 @@ def input(ctx):
 # @click.argument('url')
 @click.pass_obj
 def input_create(ctx):
+    # TODO change this to config value
     user_root = os.getcwd()
 
     while True:

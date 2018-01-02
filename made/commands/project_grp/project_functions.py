@@ -31,14 +31,14 @@ def make_folder_if_doesnt_exist(folder):
 
 
 def project_init_wp(configParser):
-    """Initialise the work product prefix you want to use into
+    """Initialise the work product settings you want to use into
     a configParser"""
 
     section_name = "work_products"
     option_name = "prefix"
     option_value = "wp"
 
-    # if the option has been set before, grab the value
+    # if the option has been set before, grab the value to use later in the command prompt
     if configParser.has_section(section_name):
         if configParser.has_option(section_name, option_name):
             option_value = configParser.get(section_name, option_name)
@@ -62,24 +62,28 @@ def project_init_pm_folder(project_folder_path):
 
 
 def project_init(project_folder_path):
-    """Creates a project configuration. Assumes current directory
+    """Creates a project configuration.
+    Assumes current directory
     is root of project"""
 
     config_file = os.path.join(project_folder_path, "made.config")
     config = configparser.ConfigParser()
 
-    # Create a blank file
+    # Create a blank config file if one does not exists already
     if is_project_initialised(project_folder_path) is False:
         open(config_file, 'a').close()
 
+    # create the pm folder structure
     project_init_pm_folder(project_folder_path)
 
+    # create other folder structures
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "inputs"))
 
     project_init_wp(config)
     with open(config_file, 'w') as configfile:
         config.write(configfile)
+
     pass
 
     # section_name = "PostgreSQL"
