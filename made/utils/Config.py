@@ -24,6 +24,13 @@ class Config(object):
         if not self.config.has_section(self.section_project):
             self.config.add_section(self.section_project)
 
+    def has_config_file(self):
+        if os.path.exists(self.path):
+            print("WARNING: config file already exists")
+            return True
+        else:
+            return False
+
     def get_path(self):
         return self.config.get('templates', 'path')
 
@@ -37,6 +44,9 @@ class Config(object):
         self.config.set(self.section_wp, 'prefix', option_value)
 
     def get_option_wp_prefix(self):
+        if not self.config.has_option(self.section_wp, 'prefix'):
+            self.add_option_wp_prefix()
+
         return self.config.get(self.section_wp, 'prefix')
 
     def add_option_inputs_root(self, option_value='s3'):
@@ -44,6 +54,12 @@ class Config(object):
 
     def add_option_project_root(self, option_value=os.getcwd()):
         self.config.set(self.section_project, 'root', option_value)
+
+    def get_option_project_root(self):
+        if not self.config.has_option(self, self.section_project):
+            self.add_option_project_root()
+
+        return self.config.get(self.section_project, 'root')
 
     def write(self):
         """Save configuration to file"""

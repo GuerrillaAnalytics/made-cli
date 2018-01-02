@@ -2,6 +2,8 @@ import click
 from made.commands.project_grp import project_functions as project_functions
 import os
 
+from made.utils import Config
+
 
 @click.group()
 @click.pass_context
@@ -18,7 +20,37 @@ def project_init(ctx, folder):
     if folder == ".":
         folder = os.getcwd()
 
-    project_functions.project_init(project_folder_path=folder)
+    config = Config(folder)
+    config.has_config_file()
+
+    # Enter a project root folder
+    while True:
+
+        project_root = click.prompt('Please enter project root', type=str, default=config.get_option_project_root())
+        if " " in project_root:
+            continue
+
+        # TODO validate the path
+        if project_root == "":
+            project_root = config.get_option_project_root()
+
+        config.add_option_project_root(project_root)
+        break
+
+    # Enter a work product prefix
+    while True:
+        work_product_prefix = \
+            click.prompt('Please enter a work product prefix', type=str, default=config.get_option_wp_prefix())
+
+        if " " in work_product_prefix:
+            continue
+
+        config.add_option_wp_prefix(work_product_prefix)
+        break
+
+    config.write()
+
+    # project_functions.project_init(project_folder_path=folder)
     pass
 
 
