@@ -3,6 +3,8 @@ import os
 
 
 class Config(object):
+    """ Class to manage accessing and writing a configuration
+    """
 
     config_file_name = "made.config"
     section_wp = 'work_products'

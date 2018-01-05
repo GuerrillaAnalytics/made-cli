@@ -27,3 +27,4 @@ tests/commands/inputs_grp/test_inputs_functions.py
 tests/commands/project_grp/__init__.py
 tests/commands/project_grp/test_project_functions.py
 tests/utils/__init__.py
+tests/utils/test_config.py

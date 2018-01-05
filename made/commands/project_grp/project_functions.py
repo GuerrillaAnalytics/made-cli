@@ -42,8 +42,8 @@ def project_init_pm_folder(project_folder_path):
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "05_close"))
 
 
-def project_init(project_folder_path):
-    """Creates a project configuration.
+def project_create_folder_structures(project_folder_path):
+    """Creates a project structure.
     Assumes current directory
     is root of project"""
 
@@ -52,7 +52,7 @@ def project_init(project_folder_path):
 
     # create other folder structures
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
-    make_folder_if_doesnt_exist(os.path.join(project_folder_path, "inputs"))
+    make_folder_if_doesnt_exist(os.path.join(project_folder_path, "workspaces"))
 
     pass
 

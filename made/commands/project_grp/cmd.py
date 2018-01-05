@@ -19,6 +19,7 @@ def project_init(ctx, folder):
     if folder == ".":
         folder = os.getcwd()
 
+    # create new configuration class for this project
     configuration = Config(folder)
     configuration.has_config_file()
 
@@ -51,7 +52,7 @@ def project_init(ctx, folder):
     # save the configuration
     configuration.write()
 
-    project_functions.project_init(project_folder_path=folder)
+    project_functions.project_create_folder_structures(project_folder_path=folder)
     pass
 
 
