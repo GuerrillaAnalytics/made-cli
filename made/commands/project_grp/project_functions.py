@@ -1,8 +1,6 @@
 import os
 import re
-
 import click
-from pathlib import Path
 
 
 class ProjectException(Exception):
@@ -14,7 +12,7 @@ def is_project_initialised(folder_location):
 
     cfg = os.path.join(folder_location, "made.config")
     # Folder exists and config exists
-    if not Path(cfg).exists():
+    if not os.path.isdir(cfg):
         click.echo(click.style("This project folder has not been initialised"))
         return False
     else:
