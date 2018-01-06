@@ -1,5 +1,6 @@
 from made.utils.config import Config
 import tempfile
+import os
 
 
 def test_constructor():
@@ -13,3 +14,17 @@ def test_constructor():
     assert test_config.section_project == "project"
 
     assert test_config.has_section_wp() == True
+
+
+def test_write():
+    """Check that file is written out"""
+    location = tempfile.mkdtemp()
+
+    # Config file should not exist yet
+    assert not os.path.isfile(os.path.join(location, Config.config_file_name))
+
+    test_config = Config(location)
+    test_config.write()
+
+    # Config file should exist now
+    assert os.path.isfile(os.path.join(location, Config.config_file_name))

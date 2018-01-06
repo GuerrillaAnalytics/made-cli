@@ -64,10 +64,13 @@ class Config(object):
         return self.config.get(self.section_project, 'root')
 
     def write(self):
+
+        print(self.path)
+        cfgfile = open(self.path, 'w')
+
         """Save configuration to file"""
-        with open(self.path, 'wb') as configfile:
-            self.config.write(configfile)
-            print(self.path)
+        self.config.write(cfgfile)
+        cfgfile.close()
 
 
 if __name__ == '__main__':
