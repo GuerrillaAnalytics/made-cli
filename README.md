@@ -10,7 +10,8 @@ This code was developed using the Anaconda distribution of Python. This seemed t
 * install pipsi with `easy_install pipsi`
 
 # Installation
-* `pipsi install -e .`
+Force installation into Python3 environment (in case you have Python2 as default environment).
+* `pipsi install -e . --python python3`
 
 # Removal
 * `pipsi uninstall made`
