@@ -1,7 +1,9 @@
-import click
-from made.commands.project_grp import project_functions as project_functions
 import os
-from made.utils.config import Config
+
+import click
+
+from made.commands.project_grp import project_functions as project_functions
+from made.controllers.config import Config
 
 
 @click.group()

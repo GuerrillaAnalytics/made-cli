@@ -6,6 +6,7 @@ Home-page: https://github.com/guerrillaAnalytics/made
 Author: Enda Ridge
 Author-email: enda.ridge@gmail.com
 License: MIT
+Description-Content-Type: UNKNOWN
 Description: 
         A working example of nested Python Click commands
         

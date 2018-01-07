@@ -1,6 +1,7 @@
-from made.utils.config import Config
-import tempfile
 import os
+import tempfile
+
+from made.controllers.config import Config
 
 
 def test_constructor():
