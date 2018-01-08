@@ -61,14 +61,11 @@ class Config(object):
     def add_option_inputs_root(self, option_value='s3'):
         self.config.set(self.section_inputs, 'root', option_value)
 
+    def add_option_input_S3bucket(self, option_value):
+        self.config.set(self.section_inputs, 'bucket', option_value)
+
     def add_option_project_root(self, option_value=os.getcwd()):
         self.config.set(self.section_project, 'root', option_value)
-
-    def get_option_project_root(self):
-        if not self.config.has_option(self, self.section_project):
-            self.add_option_project_root()
-
-        return self.config.get(self.section_project, 'root')
 
     def write(self):
 

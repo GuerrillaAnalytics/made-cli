@@ -1,5 +1,7 @@
 import abc
 
+from controllers.inputs.S3InputManager import S3InputManager
+
 
 class InputManagerFactory(object):
     """ Class to manage creation of appropriate input managers
@@ -19,11 +21,6 @@ class InputManager(abc.ABC):
     @abc.abstractmethod
     def create_input(self):
         pass
-
-
-class S3InputManager(InputManager):
-    def create_input(self):
-        print("S3 input folder creation.")
 
 
 class FileInputManager(InputManager):

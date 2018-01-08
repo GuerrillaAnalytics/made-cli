@@ -2,6 +2,7 @@ import click
 import os
 from made.commands.inputs_grp import inputs_functions
 from made import utils
+from made.controllers.config import Config
 
 
 @click.group()
@@ -16,8 +17,8 @@ def input(ctx):
 # @click.argument('url')
 @click.pass_obj
 def input_create(ctx):
-    # TODO change this to config value
-    user_root = os.getcwd()
+
+    config = Config(os.getcwd())
 
     while True:
         user_source_id = click.prompt('Please enter an input ID', type=str)
@@ -41,8 +42,9 @@ def input_create(ctx):
             continue
         break
 
-    inputs_functions.input_create(root_folder=user_root, source_id=user_source_id, source_name=user_source_name,
-                                  version=user_version)
+    config.get
+    #    inputs_functions.input_create(root_folder=user_root, source_id=user_source_id, source_name=user_source_name,
+    #                              version=user_version)
     pass
 
 
