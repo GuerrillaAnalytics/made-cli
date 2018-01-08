@@ -2,6 +2,9 @@ import abc
 
 
 class InputManagerFactory(object):
+    """ Class to manage creation of appropriate input managers
+    """
+
     def create(type):
         if type == "s3":
             return S3InputManager()
@@ -17,6 +20,7 @@ class InputManager(abc.ABC):
     def create_input(self):
         pass
 
+
 class S3InputManager(InputManager):
     def create_input(self):
         print("S3 input folder creation.")
@@ -25,6 +29,7 @@ class S3InputManager(InputManager):
 class FileInputManager(InputManager):
     def create_input(self):
         print("File system folder creation.")
+
 
 if __name__ == "__main__":
 

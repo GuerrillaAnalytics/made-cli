@@ -10,6 +10,7 @@ class Config(object):
     section_wp = 'work_products'
     section_inputs = 'inputs'
     section_project = 'project'
+    section_pipeline = 'pipeline'
 
     def __init__(self, folder):
         self.config = configparser.ConfigParser()
@@ -26,6 +27,9 @@ class Config(object):
         if not self.config.has_section(self.section_project):
             self.config.add_section(self.section_project)
 
+        if not self.config.has_section(self.section_pipeline):
+            self.config.add_section(self.section_pipeline)
+
     def has_config_file(self):
         if os.path.exists(self.path):
             print("WARNING: config file already exists")
@@ -41,6 +45,9 @@ class Config(object):
 
     def add_section_wp(self):
         return self.config.add_section(self.section_wp)
+
+    def add_section_pipeline(self):
+        return self.config.add_section(self.section_pipeline)
 
     def add_option_wp_prefix(self, option_value='wp'):
         self.config.set(self.section_wp, 'prefix', option_value)

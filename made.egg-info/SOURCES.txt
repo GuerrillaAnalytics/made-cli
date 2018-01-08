@@ -20,8 +20,9 @@ made/commands/project_grp/cmd.py
 made/commands/project_grp/project_functions.py
 made/controllers/__init__.py
 made/controllers/config.py
-made/controllers/input_folders/__init__.py
-made/controllers/input_folders/input_manager_factory.py
+made/controllers/inputs/__init__.py
+made/controllers/inputs/input_manager_factory.py
+made/controllers/work_products/__init__.py
 made/utils/__init__.py
 made/utils/utils_functions.py
 tests/commands/__init__.py
