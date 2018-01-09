@@ -1,6 +1,5 @@
 import os
 import tempfile
-
 from made.controllers.config import Config
 
 

@@ -1,6 +1,8 @@
-import click
 import os
-from made.commands.inputs_grp import inputs_functions
+
+import click
+
+from made.controllers.inputs import inputs_functions
 from made import utils
 from made.controllers.config import Config
 

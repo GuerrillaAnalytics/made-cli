@@ -1,12 +1,12 @@
+import errno
 import os
 import shutil
 import tempfile
-import errno
 import pytest
 
-from made.commands.inputs_grp.inputs_functions import input_audit_path
-from made.commands.inputs_grp.inputs_functions import input_build_name
-from made.commands.inputs_grp.inputs_functions import input_create
+from made.controllers.inputs.inputs_functions import input_audit_path
+from made.controllers.inputs.input_manager_factory import input_build_name
+from made.controllers.inputs.inputs_functions import input_create
 
 
 def test_input_build_name():

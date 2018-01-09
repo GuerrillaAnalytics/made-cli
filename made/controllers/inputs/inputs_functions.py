@@ -2,22 +2,7 @@ import errno
 import os
 import re
 
-
-def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
-    """create a folder path for a given input"""
-
-    valid = {"raw", "formatted"}
-    if raw_or_formatted not in valid:
-        raise ValueError("raw_or_formatted: must have value 'raw' or 'formatted'")
-
-    source_id = source_id.lower()
-    version = str(version).zfill(3)
-
-    # TODO Check source_id does not contain spaces
-
-    path = os.path.join(source_id + "_" + source_name,
-                        version, raw_or_formatted, "data")
-    return path
+from made.controllers.inputs.input_manager_factory import input_build_name
 
 
 def input_create(root_folder, source_id, source_name, version):
