@@ -51,19 +51,10 @@ class InputManager(abc.ABC):
         pass
 
 
-class S3InputManager(InputManager):
-
-    def create_new_source(self):
-        print("not implemented yet")
-
-    def create_new_source_version(self):
-        print("not implemented yet")
-
-    def audit(self):
-        print("not implemented yet")
-
-
 class FileInputManager(InputManager):
+
+    def __init__(self):
+        pass
 
     def create_new_source(self):
         print("not implemented yet")
@@ -75,6 +66,18 @@ class FileInputManager(InputManager):
         # TODO Check new source does not exist already
         # TODO Create new folder at target path
         # TODO add first version and subfolder
+
+    def create_new_source_version(self):
+        print("not implemented yet")
+
+    def audit(self):
+        print("not implemented yet")
+
+
+class S3InputManager(InputManager):
+
+    def create_new_source(self):
+        print("not implemented yet")
 
     def create_new_source_version(self):
         print("not implemented yet")
