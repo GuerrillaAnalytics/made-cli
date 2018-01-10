@@ -38,15 +38,12 @@ def input_create(ctx):
         break
 
     # version of input
-    while True:
-        user_version = click.prompt('Please enter a version', type=int, default=1)
-        if user_version <= 0:
-            continue
-        break
+    # while True:
+    #     user_version = click.prompt('Please enter a version', type=int, default=1)
+    #     if user_version <= 0:
+    #         continue
+    #     break
 
-    config.get
-    #    inputs_functions.input_create(root_folder=user_root, source_id=user_source_id, source_name=user_source_name,
-    #                              version=user_version)
     pass
 
 

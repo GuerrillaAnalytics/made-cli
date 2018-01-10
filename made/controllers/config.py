@@ -1,6 +1,6 @@
 import configparser
 import os
-
+import logging
 
 class Config(object):
     """ Class to manage accessing and writing a configuration
@@ -17,6 +17,8 @@ class Config(object):
         self.path = os.path.join(folder, self.config_file_name)
         self.config.read(self.path)
 
+        logging.getLogger("my logger").debug("Configuring from: " + self.path)
+
         # add the section if it does not already exist
         if not self.config.has_section(self.section_inputs):
             self.config.add_section(self.section_inputs)
@@ -30,11 +32,13 @@ class Config(object):
         if not self.config.has_section(self.section_pipeline):
             self.config.add_section(self.section_pipeline)
 
+
     def has_config_file(self):
         if os.path.exists(self.path):
-            print("WARNING: config file already exists")
+            logging.getLogger("my logger").info("Config file already exists")
             return True
         else:
+            logging.getLogger("my logger").debug("Config file does not exist")
             return False
 
     def get_path(self):

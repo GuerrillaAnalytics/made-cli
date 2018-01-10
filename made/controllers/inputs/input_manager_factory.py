@@ -1,5 +1,7 @@
 import os
 import abc
+import boto3
+from made.controllers.config import Config
 
 
 def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
@@ -21,17 +23,21 @@ class InputManagerFactory(object):
     """ Class to manage creation of appropriate input managers
     """
 
-    def create(type):
+    def create(type, config):
         if type == "s3":
-            return S3InputManager()
+            return S3InputManager(config)
         if type == "file":
-            return FileInputManager()
+            return FileInputManager(config)
         assert 0, "Bad manager creation: " + type
 
     factory = staticmethod(create)
 
 
 class InputManager(abc.ABC):
+
+    def __init__(self, config):
+        self.configuration = config
+        pass
 
     @abc.abstractmethod
     def create_new_source(self):
@@ -59,14 +65,6 @@ class FileInputManager(InputManager):
     def create_new_source(self):
         print("not implemented yet")
 
-        # TODO Get the root path for the input and check it exists
-        # TODO Check the source ID is provided and correct
-        # TODO Check the source label is provided and correct
-        # TODO Build path to new source
-        # TODO Check new source does not exist already
-        # TODO Create new folder at target path
-        # TODO add first version and subfolder
-
     def create_new_source_version(self):
         print("not implemented yet")
 
@@ -78,6 +76,15 @@ class S3InputManager(InputManager):
 
     def create_new_source(self):
         print("not implemented yet")
+
+    # TODO Get the root path for the input and check it exists
+
+    # TODO Check the source ID is provided and correct
+    # TODO Check the source label is provided and correct
+    # TODO Build path to new source
+    # TODO Check new source does not exist already
+    # TODO Create new folder at target path
+    # TODO add first version and subfolder
 
     def create_new_source_version(self):
         print("not implemented yet")
@@ -94,3 +101,8 @@ if __name__ == "__main__":
 
     obj = InputManagerFactory.create("file")
     obj.create_new_source()
+
+    s3 = boto3.resource('s3')
+    my_bucket = s3.Bucket('js-dpp-lab-ds1-data-dev')
+    for object in my_bucket.objects.all():
+        print(object)
