@@ -32,7 +32,6 @@ class Config(object):
         if not self.config.has_section(self.section_pipeline):
             self.config.add_section(self.section_pipeline)
 
-
     def has_config_file(self):
         if os.path.exists(self.path):
             logging.getLogger("my logger").info("Config file already exists")
@@ -67,7 +66,6 @@ class Config(object):
 
     def add_option_input_S3bucket(self, option_value):
         self.config.set(self.section_inputs, 'bucket', option_value)
-
 
     def write(self):
 

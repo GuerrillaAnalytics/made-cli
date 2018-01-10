@@ -91,6 +91,7 @@ def project_audit_tree(project_folder):
     """Check that a project tree has correct structure"""
     pass
 
+
 def project_configure(folder):
     if folder == ".":
         folder = os.getcwd()

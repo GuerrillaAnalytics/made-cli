@@ -1,3 +1,6 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from made.commands.project_grp.project_functions import project_create_folder
 from made.commands.project_grp.project_functions import project_audit_name
 

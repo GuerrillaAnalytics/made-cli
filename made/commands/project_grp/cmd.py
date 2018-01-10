@@ -21,7 +21,7 @@ def project_configure(ctx, folder):
 
     project_functions.project_configure(folder)
 
-    #project_functions.project_create_folder_structures(project_folder_path=folder)
+    # project_functions.project_create_folder_structures(project_folder_path=folder)
     pass
 
 

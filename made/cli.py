@@ -9,7 +9,6 @@ import os.path
 import logging
 
 # bizarre fix to PYTHONPATH problems
-from click import Context
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import click
 import sys
@@ -56,7 +55,7 @@ if __name__ == '__main__':
     if not configuration.has_config_file():
         click.echo(click.style('A project has not been configured in this folder', fg='yellow'))
         while True:
-            if click.confirm('Do you want to configure a project here?', abort = True):
+            if click.confirm('Do you want to configure a project here?', abort=True):
                 logging.getLogger("my logger").debug("Configuring project based on confirmation prompt")
                 project_functions.project_configure(os.getcwd())
                 break

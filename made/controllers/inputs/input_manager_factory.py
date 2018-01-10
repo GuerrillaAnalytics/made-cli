@@ -1,7 +1,6 @@
 import os
 import abc
 import boto3
-from made.controllers.config import Config
 
 
 def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
