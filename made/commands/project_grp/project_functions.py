@@ -2,6 +2,8 @@ import os
 import re
 import click
 
+from made.controllers.config import Config
+
 
 class ProjectException(Exception):
     pass
@@ -88,3 +90,24 @@ def project_audit_name(project_folder):
 def project_audit_tree(project_folder):
     """Check that a project tree has correct structure"""
     pass
+
+def project_configure(folder):
+    if folder == ".":
+        folder = os.getcwd()
+
+    # create new configuration class for this project
+    configuration = Config(folder)
+
+    # Enter a work product prefix
+    while True:
+        work_product_prefix = \
+            click.prompt('Please enter a work product prefix', type=str, default=configuration.get_option_wp_prefix())
+
+        if " " in work_product_prefix:
+            continue
+
+        configuration.add_option_wp_prefix(work_product_prefix)
+        break
+
+    # save the configuration
+    configuration.write()

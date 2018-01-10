@@ -12,49 +12,16 @@ def project(ctx):
     pass
 
 
-@project.command('init', help="Initialise a project configuration")
+@project.command('configure', help="Initialise a project configuration")
 @click.argument('folder', default=".", required=False)
 # @click.option('--organization', '-o', default='')
 # @click.argument('url')
 @click.pass_obj
-def project_init(ctx, folder):
-    if folder == ".":
-        folder = os.getcwd()
+def project_configure(ctx, folder):
 
-    # create new configuration class for this project
-    configuration = Config(folder)
-    configuration.has_config_file()
+    project_functions.project_configure(folder)
 
-    # Enter a project root folder
-    while True:
-
-        project_root = \
-            click.prompt('Please enter project root', type=str, default=configuration.get_option_project_root())
-        if " " in project_root:
-            continue
-
-        # TODO validate the path
-        if project_root == "":
-            project_root = configuration.get_option_project_root()
-
-            configuration.add_option_project_root(project_root)
-        break
-
-    # Enter a work product prefix
-    while True:
-        work_product_prefix = \
-            click.prompt('Please enter a work product prefix', type=str, default=configuration.get_option_wp_prefix())
-
-        if " " in work_product_prefix:
-            continue
-
-        configuration.add_option_wp_prefix(work_product_prefix)
-        break
-
-    # save the configuration
-    configuration.write()
-
-    project_functions.project_create_folder_structures(project_folder_path=folder)
+    #project_functions.project_create_folder_structures(project_folder_path=folder)
     pass
 
 

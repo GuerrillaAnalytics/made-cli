@@ -9,11 +9,13 @@ import os.path
 import logging
 
 # bizarre fix to PYTHONPATH problems
+from click import Context
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import click
 import sys
 import os.path
 
+from made.commands.project_grp import project_functions
 import made.controllers.config
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -56,6 +58,7 @@ if __name__ == '__main__':
         while True:
             if click.confirm('Do you want to configure a project here?', abort = True):
                 logging.getLogger("my logger").debug("Configuring project based on confirmation prompt")
+                project_functions.project_configure(os.getcwd())
                 break
 
     else:
