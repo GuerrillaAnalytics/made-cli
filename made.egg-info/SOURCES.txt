@@ -25,6 +25,7 @@ made/controllers/inputs/inputs_functions.py
 made/controllers/work_products/__init__.py
 made/utils/__init__.py
 made/utils/utils_functions.py
+tests/commands/__init__.py
 tests/commands/inputs_grp/test_inputs_functions.py
 tests/commands/project_grp/test_project_functions.py
 tests/controllers/test_config.py

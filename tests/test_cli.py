@@ -2,7 +2,6 @@ import pytest
 from click.testing import CliRunner
 from made import cli
 
-
 @pytest.fixture
 def runner():
     return CliRunner()
