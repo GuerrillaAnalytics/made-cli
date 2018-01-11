@@ -39,7 +39,7 @@ def input_create(ctx):
 
     config=Config(os.getcwd())
     input_manager = input_manager_factory.InputManagerFactory.create(config)
-    input_manager.create_new_source()
+    input_manager.create_new_source(user_source_id,user_source_name)
     pass
 
 

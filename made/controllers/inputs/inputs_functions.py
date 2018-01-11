@@ -2,35 +2,6 @@ import errno
 import os
 import re
 
-from made.controllers.inputs.input_manager_factory import input_build_name
-
-
-def input_create(root_folder, source_id, source_name, version):
-    """Creates an input folder tree in the correct structure"""
-
-    # Create the raw folder path
-    raw_path = input_build_name(source_id, source_name, version, "raw")
-
-    try:
-        os.makedirs(os.path.join(root_folder, raw_path))
-    except OSError as exc:  # Python >2.5
-        if exc.errno == errno.EEXIST and os.path.isdir(raw_path):
-            pass
-        else:
-            raise
-
-    # Create the formatter folder path
-    formatted_path = input_build_name(source_id, source_name, version, "formatted")
-
-    try:
-        os.makedirs(os.path.join(root_folder, formatted_path))
-    except OSError as exc:  # Python >2.5
-        if exc.errno == errno.EEXIST and os.path.isdir(formatted_path):
-            pass
-        else:
-            raise
-
-    pass
 
 
 def input_audit_path(input_base_folder):

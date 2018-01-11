@@ -6,20 +6,11 @@ import logging
 from made.controllers import config
 from made.controllers.config import Config
 
-
-def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
-    """create an input folder path for a given input"""
-
-    valid = {"raw", "formatted"}
-    if raw_or_formatted not in valid:
-        raise ValueError("raw_or_formatted: must have value 'raw' or 'formatted'")
-
-    source_id = source_id.lower()
-    version = str(version).zfill(3)
-
-    path = os.path.join(source_id + "_" + source_name,
-                        version, raw_or_formatted, "data")
-    return path
+def create_s3_folder(bucket,source_id,source_label,version):
+    s = \
+        "/".join(
+            ["S3://" + bucket, source_id + "_" + source_label, version, "raw/data"])
+    return s
 
 
 class InputManagerFactory(object):
@@ -87,13 +78,15 @@ class S3InputManager(InputManager):
         print("not implemented yet")
 
         # TODO Get the root path for the input and check it exists
-        inputs_root = self.configuration.get(Config.section_inputs,"root")
+        inputs_root = self.configuration.get_inputs_root()
         logger = logging.getLogger("my logger").debug("Inputs root is: " + inputs_root)
         # TODO Check the source ID is provided and correct
         # TODO Check the source label is provided and correct
         # TODO Build path to new source
-        s="S3://"
-        s.join("S3://",self.configuration.get_S3bucket_name(),"/")
+
+        version = "01"
+        s=create_s3_folder(self.configuration.get_S3bucket_name(),source_id,source_label,version)
+        logging.getLogger('my logger').debug("Input folder: " + s)
         # TODO Check new source does not exist already
         # TODO Create new folder at target path
         # TODO add first version and subfolder

@@ -71,6 +71,9 @@ class Config(object):
     def get_S3bucket_name(self):
         return self.config.get(Config.section_inputs,'bucket')
 
+    def get_inputs_root(self):
+        return self.config.get(Config.section_inputs,'root')
+
     def write(self):
 
         print(self.path)
