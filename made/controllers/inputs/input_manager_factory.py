@@ -3,6 +3,7 @@ import abc
 import boto3
 import logging
 
+from made.controllers import config
 from made.controllers.config import Config
 
 
@@ -25,10 +26,14 @@ class InputManagerFactory(object):
     """ Class to manage creation of appropriate input managers
     """
 
-    def create(type, config):
+    def create(config):
+        type = config.config.get(Config.section_inputs, "root")
+
         if type == "s3":
+            logging.getLogger("my logger").debug("Creating an s3 input manager")
             return S3InputManager(config)
         if type == "file":
+            logging.getLogger("my logger").debug("Creating an file input manager")
             return FileInputManager(config)
         assert 0, "Bad manager creation: " + type
 
@@ -76,7 +81,7 @@ class FileInputManager(InputManager):
 
 class S3InputManager(InputManager):
 
-    def create_new_source(self):
+    def create_new_source(self,source_id,source_label):
         """ Create a new S3 source folder"""
 
         print("not implemented yet")
@@ -84,12 +89,14 @@ class S3InputManager(InputManager):
         # TODO Get the root path for the input and check it exists
         inputs_root = self.configuration.get(Config.section_inputs,"root")
         logger = logging.getLogger("my logger").debug("Inputs root is: " + inputs_root)
-    # TODO Check the source ID is provided and correct
-    # TODO Check the source label is provided and correct
-    # TODO Build path to new source
-    # TODO Check new source does not exist already
-    # TODO Create new folder at target path
-    # TODO add first version and subfolder
+        # TODO Check the source ID is provided and correct
+        # TODO Check the source label is provided and correct
+        # TODO Build path to new source
+        s="S3://"
+        s.join("S3://",self.configuration.get_S3bucket_name(),"/")
+        # TODO Check new source does not exist already
+        # TODO Create new folder at target path
+        # TODO add first version and subfolder
 
     def create_new_source_version(self):
         print("not implemented yet")

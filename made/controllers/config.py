@@ -68,6 +68,9 @@ class Config(object):
     def add_option_inputs_S3bucket(self, option_value):
         self.config.set(self.section_inputs, 'bucket', option_value)
 
+    def get_S3bucket_name(self):
+        return self.config.get(Config.section_inputs,'bucket')
+
     def write(self):
 
         print(self.path)

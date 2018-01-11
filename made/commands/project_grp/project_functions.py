@@ -3,7 +3,7 @@ import re
 import click
 
 from made.controllers.config import Config
-
+import logging
 
 class ProjectException(Exception):
     pass
@@ -93,6 +93,8 @@ def project_audit_tree(project_folder):
 
 
 def project_configure(folder):
+    """ Create a minimum configuration for a project"""
+
     if folder == ".":
         folder = os.getcwd()
 
@@ -110,14 +112,30 @@ def project_configure(folder):
         configuration.add_option_wp_prefix(work_product_prefix)
         break
 
+    # Input folder types
     while True:
         input_root = \
             click.prompt("Enter the input folder root [s3/file]", type=click.Choice(["s3","file"]), default="s3")
+        logging.getLogger('my logger').debug("Input root was set to: " + input_root)
 
         if " " in input_root:
                 continue
 
         configuration.add_option_inputs_root(input_root)
+
+        # if S3, grab the bucket name
+        if input_root == 's3':
+            while True:
+                bucket_name=click.prompt("Enter s3 bucket name", type =str)
+                logging.getLogger('my logger').debug("S3 bucket name was set to: " + bucket_name)
+
+                # TODO validate bucket name format
+
+                configuration.add_option_inputs_S3bucket(bucket_name)
+
+                break
+        else:
+            logging.getLogger('my logger').debug('Prompting for file root option')
         break
 
     # save the configuration

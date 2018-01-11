@@ -2,6 +2,8 @@ import os
 
 import click
 
+from made.controllers.config import Config
+from made.controllers.inputs import input_manager_factory
 from made.commands.project_grp import project_functions
 from made.controllers.inputs import inputs_functions
 from made import utils
@@ -35,7 +37,9 @@ def input_create(ctx):
             continue
         break
 
-
+    config=Config(os.getcwd())
+    input_manager = input_manager_factory.InputManagerFactory.create(config)
+    input_manager.create_new_source()
     pass
 
 
