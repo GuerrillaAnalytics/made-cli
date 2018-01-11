@@ -1,6 +1,9 @@
 import os
 import abc
 import boto3
+import logging
+
+from made.controllers.config import Config
 
 
 def input_build_name(source_id, source_name, version, raw_or_formatted="raw"):
@@ -74,10 +77,13 @@ class FileInputManager(InputManager):
 class S3InputManager(InputManager):
 
     def create_new_source(self):
+        """ Create a new S3 source folder"""
+
         print("not implemented yet")
 
-    # TODO Get the root path for the input and check it exists
-    self.configuration.
+        # TODO Get the root path for the input and check it exists
+        inputs_root = self.configuration.get(Config.section_inputs,"root")
+        logger = logging.getLogger("my logger").debug("Inputs root is: " + inputs_root)
     # TODO Check the source ID is provided and correct
     # TODO Check the source label is provided and correct
     # TODO Build path to new source

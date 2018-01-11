@@ -62,9 +62,10 @@ class Config(object):
         return self.config.get(self.section_wp, 'prefix')
 
     def add_option_inputs_root(self, option_value='s3'):
+        """ Input folder type (S3 or file) """
         self.config.set(self.section_inputs, 'root', option_value)
 
-    def add_option_input_S3bucket(self, option_value):
+    def add_option_inputs_S3bucket(self, option_value):
         self.config.set(self.section_inputs, 'bucket', option_value)
 
     def write(self):

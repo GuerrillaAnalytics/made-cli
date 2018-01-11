@@ -110,5 +110,15 @@ def project_configure(folder):
         configuration.add_option_wp_prefix(work_product_prefix)
         break
 
+    while True:
+        input_root = \
+            click.prompt("Enter the input folder root [s3/file]", type=click.Choice(["s3","file"]), default="s3")
+
+        if " " in input_root:
+                continue
+
+        configuration.add_option_inputs_root(input_root)
+        break
+
     # save the configuration
     configuration.write()

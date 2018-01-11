@@ -2,6 +2,7 @@ import os
 
 import click
 
+from made.commands.project_grp import project_functions
 from made.controllers.inputs import inputs_functions
 from made import utils
 
@@ -27,19 +28,13 @@ def input_create(ctx):
 
     # source name
     while True:
-        user_source_name = click.prompt('Please enter a schema name to load into', type=str)
+        user_source_name = click.prompt('Please enter a schema name', type=str)
         if len(user_source_name.strip()) == 0:
             continue
         if " " in user_source_name.strip():
             continue
         break
 
-    # version of input
-    # while True:
-    #     user_version = click.prompt('Please enter a version', type=int, default=1)
-    #     if user_version <= 0:
-    #         continue
-    #     break
 
     pass
 

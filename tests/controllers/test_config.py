@@ -19,7 +19,7 @@ def test_constructor():
 def test_add_option_input_S3bucket():
     location = tempfile.mkdtemp()
     test_config = Config(location)
-    test_config.add_option_input_S3bucket("bucket_value")
+    test_config.add_option_inputs_S3bucket("bucket_value")
     assert test_config.config.get(test_config.section_inputs, 'bucket') == "bucket_value"
 
 
