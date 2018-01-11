@@ -1,15 +1,13 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from made.commands.project_grp.project_functions import project_create_folder
+from made.commands.project_grp.project_functions import project_create_folder, project_configure
 from made.commands.project_grp.project_functions import project_audit_name
 
 # from made.commands.project_grp.project_functions import project_init_wp
 import os
 import tempfile
 import shutil
-# import click
-# from click.testing import CliRunner
 
 
 def test_project_create_folder():

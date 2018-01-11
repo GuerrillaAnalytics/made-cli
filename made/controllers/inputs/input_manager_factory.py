@@ -77,7 +77,7 @@ class S3InputManager(InputManager):
         print("not implemented yet")
 
     # TODO Get the root path for the input and check it exists
-
+    self.configuration.
     # TODO Check the source ID is provided and correct
     # TODO Check the source label is provided and correct
     # TODO Build path to new source
