@@ -96,7 +96,7 @@ class S3InputManager(InputManager):
             response = client.put_object(
                 Bucket=self.configuration.get_S3bucket_name(),
                 Body='',
-                Key='test_folder')
+                Key='projects/test_folder/')
         except botocore.exceptions.ClientError:
             logging.getLogger('my logger').exception("Problem creating folder in s3 bucket")
 
