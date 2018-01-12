@@ -1,9 +1,33 @@
 """
 A working example of nested Python Click commands
 """
-from setuptools import find_packages, setup
+from setuptools import Command, find_packages, setup
+from os.path import abspath, dirname, join
+from made import __version__
+from subprocess import call
 
 dependencies = ['click']
+
+this_dir = abspath(dirname(__file__))
+with open(join(this_dir, 'README.rst'), encoding='utf-8') as file:
+    long_description = file.read()
+
+
+class RunTests(Command):
+    """Run all tests."""
+    description = 'run tests'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        """Run all tests!"""
+        errno = call(['py.test', '--cov=skele', '--cov-report=term-missing'])
+        raise SystemExit(errno)
 
 setup(
     name='made',
@@ -14,7 +38,7 @@ setup(
     author_email='enda.ridge@gmail.com',
     description='A command line tool for doing data analysis efficiently',
     long_description=__doc__,
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['docs', 'tests*']),
     include_package_data=True,
     zip_safe=False,
     platforms='any',
