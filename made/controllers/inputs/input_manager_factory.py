@@ -90,7 +90,8 @@ class S3InputManager(InputManager):
         # TODO Check new source does not exist already
         # TODO Create new folder at target path
         # TODO add first version and subfolder
-        client = boto3.client('s3')
+        dev = boto3.session.Session(profile_name='dpp1')
+        client = dev.client('s3')
         try:
             response = client.put_object(
                 Bucket=self.configuration.get_S3bucket_name(),
