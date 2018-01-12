@@ -3,13 +3,15 @@ import abc
 import boto3
 import logging
 
+import botocore
+
 from made.controllers import config
 from made.controllers.config import Config
 
-def create_s3_folder(bucket,source_id,source_label,version):
+def create_s3_folder(source_id,source_label,version):
     s = \
         "/".join(
-            ["S3://" + bucket, source_id + "_" + source_label, version, "raw/data"])
+            [ str(source_id) + "_" + source_label, version, "raw/data"])
     return s
 
 
@@ -75,8 +77,6 @@ class S3InputManager(InputManager):
     def create_new_source(self,source_id,source_label):
         """ Create a new S3 source folder"""
 
-        print("not implemented yet")
-
         # TODO Get the root path for the input and check it exists
         inputs_root = self.configuration.get_inputs_root()
         logger = logging.getLogger("my logger").debug("Inputs root is: " + inputs_root)
@@ -85,11 +85,22 @@ class S3InputManager(InputManager):
         # TODO Build path to new source
 
         version = "01"
-        s=create_s3_folder(self.configuration.get_S3bucket_name(),source_id,source_label,version)
-        logging.getLogger('my logger').debug("Input folder: " + s)
+        s=create_s3_folder(source_id,source_label,version)
+        logging.getLogger('my logger').debug("s3 input folder: " + s)
         # TODO Check new source does not exist already
         # TODO Create new folder at target path
         # TODO add first version and subfolder
+        client = boto3.client('s3')
+        try:
+            response = client.put_object(
+                Bucket=self.configuration.get_S3bucket_name(),
+                Body='',
+                Key='test_folder')
+        except botocore.exceptions.ClientError:
+            logging.getLogger('my logger').exception("Problem creating folder in s3 bucket")
+
+
+
 
     def create_new_source_version(self):
         print("not implemented yet")
@@ -101,13 +112,8 @@ class S3InputManager(InputManager):
 if __name__ == "__main__":
 
     # Create object using factory.
-    obj = InputManagerFactory.create("s3")
-    obj.create_new_source()
-
-    obj = InputManagerFactory.create("file")
-    obj.create_new_source()
-
-    s3 = boto3.resource('s3')
-    my_bucket = s3.Bucket('js-dpp-lab-ds1-data-dev')
-    for object in my_bucket.objects.all():
-        print(object)
+    config=Config(os.getcwd())
+    config.add_option_inputs_root('s3')
+    config.add_option_inputs_S3bucket('js-dpp-lab-ds1-data-dev')
+    obj = InputManagerFactory.create(config)
+    obj.create_new_source(45,'transactions')
