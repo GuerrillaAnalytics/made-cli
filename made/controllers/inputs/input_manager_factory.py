@@ -113,8 +113,11 @@ class S3InputManager(InputManager):
 if __name__ == "__main__":
 
     # Create object using factory.
-    config=Config(os.getcwd())
-    config.add_option_inputs_root('s3')
-    config.add_option_inputs_S3bucket('js-dpp-lab-ds1-data-dev')
-    obj = InputManagerFactory.create(config)
-    obj.create_new_source(45,'transactions')
+    # config=Config(os.getcwd())
+    # config.add_option_inputs_root('s3')
+    # config.add_option_inputs_S3bucket('js-dpp-lab-ds1-data-dev')
+    # obj = InputManagerFactory.create(config)
+    # obj.create_new_source(45,'transactions')
+    dev = boto3.session.Session(profile_name='dpp1')
+    client = dev.client('s3')
+    result = client.list_objects(Bucket="js-dpp-lab-ds1-data-dev", Prefix="projects")
