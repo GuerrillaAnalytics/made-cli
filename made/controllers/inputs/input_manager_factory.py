@@ -11,7 +11,8 @@ from made.controllers import config
 from made.controllers.config import Config
 
 
-def create_s3_folder(project_folder_name, source_id, source_label, version):
+def create_folder_path(project_folder_name, source_id, source_label, version):
+    """Create the full folder path to an input"""
     s = \
         "/".join(
             ["projects",project_folder_name,"inputs",str(source_id) + "_" + source_label, version, "raw/data"])
@@ -86,7 +87,7 @@ class S3InputManager(InputManager):
         project_name ='enda'
         project_name=self.configuration.get_project_name()
         version = "01"
-        s = create_s3_folder( project_name,source_id, source_label, version)
+        s = create_folder_path(project_name, source_id, source_label, version)
         logging.getLogger('my logger').debug("s3 input folder: " + s)
         # TODO Check new source does not exist already
         # TODO Create new folder at target path
