@@ -6,7 +6,7 @@ from os.path import abspath, dirname, join
 from made import __version__
 from subprocess import call
 
-dependencies = ['click']
+dependencies = ['click', 'boto3']
 
 this_dir = abspath(dirname(__file__))
 with open(join(this_dir, 'README.rst'), encoding='utf-8') as file:
@@ -26,7 +26,7 @@ class RunTests(Command):
 
     def run(self):
         """Run all tests!"""
-        errno = call(['py.test', '--cov=skele', '--cov-report=term-missing'])
+        errno = call(['py.test', '--cov=made', '--cov-report=term-missing'])
         raise SystemExit(errno)
 
 setup(
