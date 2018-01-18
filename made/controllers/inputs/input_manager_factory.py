@@ -2,16 +2,19 @@ import os
 import abc
 import boto3
 import logging
-
+import sys
 import botocore
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../'))
 
 from made.controllers import config
 from made.controllers.config import Config
 
-def create_s3_folder(source_id,source_label,version):
+
+def create_s3_folder(project_folder_name, source_id, source_label, version):
     s = \
         "/".join(
-            [ str(source_id) + "_" + source_label, version, "raw/data"])
+            ["projects",project_folder_name,"inputs",str(source_id) + "_" + source_label, version, "raw/data"])
     return s
 
 
@@ -34,7 +37,6 @@ class InputManagerFactory(object):
 
 
 class InputManager(abc.ABC):
-
     def __init__(self, config):
         self.configuration = config
         pass
@@ -58,7 +60,6 @@ class InputManager(abc.ABC):
 
 
 class FileInputManager(InputManager):
-
     def __init__(self):
         pass
 
@@ -73,8 +74,7 @@ class FileInputManager(InputManager):
 
 
 class S3InputManager(InputManager):
-
-    def create_new_source(self,source_id,source_label):
+    def create_new_source(self, source_id, source_label):
         """ Create a new S3 source folder"""
 
         # TODO Get the root path for the input and check it exists
@@ -83,9 +83,10 @@ class S3InputManager(InputManager):
         # TODO Check the source ID is provided and correct
         # TODO Check the source label is provided and correct
         # TODO Build path to new source
-
+        project_name ='enda'
+        project_name=self.configuration.get_project_name()
         version = "01"
-        s=create_s3_folder(source_id,source_label,version)
+        s = create_s3_folder( project_name,source_id, source_label, version)
         logging.getLogger('my logger').debug("s3 input folder: " + s)
         # TODO Check new source does not exist already
         # TODO Create new folder at target path
@@ -96,12 +97,13 @@ class S3InputManager(InputManager):
             response = client.put_object(
                 Bucket=self.configuration.get_S3bucket_name(),
                 Body='',
-                Key='projects/test_folder/')
+                Key=s,
+                ServerSideEncryption='AES256')
+            logging.getLogger('my logger').info(response)
         except botocore.exceptions.ClientError:
-            logging.getLogger('my logger').exception("Problem creating folder in s3 bucket")
-
-
-
+            logging.getLogger('my logger') \
+                .exception("Problem creating folder in s3 bucket" \
+                           " Check your profile permissions and encryption settings")
 
     def create_new_source_version(self):
         print("not implemented yet")
@@ -111,7 +113,6 @@ class S3InputManager(InputManager):
 
 
 if __name__ == "__main__":
-
     # Create object using factory.
     # config=Config(os.getcwd())
     # config.add_option_inputs_root('s3')
@@ -120,4 +121,14 @@ if __name__ == "__main__":
     # obj.create_new_source(45,'transactions')
     dev = boto3.session.Session(profile_name='dpp1')
     client = dev.client('s3')
-    result = client.list_objects(Bucket="js-dpp-lab-ds1-data-dev", Prefix="projects")
+    result = client.list_objects(Bucket="js-dpp-lab-ds1-data-dev", Prefix="projects/")
+    print(result)
+    print("")
+    dev = boto3.session.Session(profile_name='dpp1')
+    client = dev.client('s3')
+
+    response = client.put_object(
+        Bucket='js-dpp-lab-ds1-data-dev',
+        Body='',
+        Key='projects/test_folder/',
+        ServerSideEncryption='AES256')
