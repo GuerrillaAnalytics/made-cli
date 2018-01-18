@@ -13,6 +13,7 @@ class Config(object):
     section_pipeline = 'pipeline'
 
     def __init__(self, folder):
+        self.project_folder = folder
         self.config = configparser.ConfigParser()
         self.path = os.path.join(folder, self.config_file_name)
         self.config.read(self.path)
@@ -54,6 +55,10 @@ class Config(object):
 
     def add_option_wp_prefix(self, option_value='wp'):
         self.config.set(self.section_wp, 'prefix', option_value)
+
+    def get_project_name(self):
+        """Return the project name (inferred from project folder name"""
+        return os.path.basename(self.project_folder)
 
     def get_option_wp_prefix(self):
         if not self.config.has_option(self.section_wp, 'prefix'):
