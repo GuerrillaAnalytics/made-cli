@@ -13,9 +13,12 @@ from made.controllers.config import Config
 
 def create_folder_path(project_folder_name, source_id, source_label, version):
     """Create the full folder path to an input"""
+
+    # Ensure there is a trailing / so a folder is created in S3
+    # instead of a file
     s = \
         "/".join(
-            ["projects",project_folder_name,"inputs",str(source_id) + "_" + source_label, version, "raw/data"])
+            ["projects",project_folder_name,"inputs", str(source_id) + "_" + source_label, version, "raw","data",""])
     return s
 
 

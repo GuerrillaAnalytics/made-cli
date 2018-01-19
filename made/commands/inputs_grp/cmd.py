@@ -1,7 +1,8 @@
 import os
-
+import logging
 import click
 
+from made.commands.inputs_grp.input_functions import validate_input_id
 from made.controllers.config import Config
 from made.controllers.inputs import input_manager_factory
 from made.commands.project_grp import project_functions
@@ -24,8 +25,10 @@ def input_create(ctx):
 
     while True:
         user_source_id = click.prompt('Please enter an input ID', type=str)
-        if " " in user_source_id:
+        if not validate_input_id(user_source_id):
+            logging.getLogger('my logger').debug("Input ID has invalid format "+ user_source_id)
             continue
+
         break
 
     # source name

@@ -1,3 +1,4 @@
+import string
 import os
 import re
 import click
@@ -7,6 +8,23 @@ import logging
 
 class ProjectException(Exception):
     pass
+
+
+def validate_project_name(project_name):
+    """ Validates a project name to certain rules"""
+
+    if " " in project_name:
+        return False
+
+    # create a set of invalid characters
+    invalidChars = set(string.punctuation.replace("_", ""))
+    invalidChars.add('£')
+
+    # chekc if the name contains any of the invalid characters
+    if any(char in invalidChars for char in project_name):
+        return False
+
+    return True
 
 
 def is_project_initialised(folder_location):
@@ -101,6 +119,19 @@ def project_configure(folder):
     # create new configuration class for this project
     configuration = Config(folder)
 
+    # project level configurations
+    while True:
+        project_name = \
+            click.prompt('Please enter a project name',type = str, default='ds_xxx')
+
+        # TODO validate that the project name is the right format
+        is_valid = validate_project_name(project_name)
+        if is_valid:
+            configuration.add_option_project_name(project_name)
+            break
+
+        logging.getLogger('my logger').info(('Not a valid project name'))
+
     # Enter a work product prefix
     while True:
         work_product_prefix = \
@@ -126,7 +157,8 @@ def project_configure(folder):
         # if S3, grab the bucket name
         if input_root == 's3':
             while True:
-                bucket_name=click.prompt("Enter s3 bucket name", type =str)
+                bucket_name=configuration.get_S3bucket_name()
+                bucket_name=click.prompt("Enter s3 bucket name", type =str,default=bucket_name)
                 logging.getLogger('my logger').debug("S3 bucket name was set to: " + bucket_name)
 
                 # TODO validate bucket name format

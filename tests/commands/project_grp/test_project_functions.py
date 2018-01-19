@@ -1,7 +1,8 @@
+import string
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from made.commands.project_grp.project_functions import project_create_folder, project_configure
+from made.commands.project_grp.project_functions import project_create_folder, project_configure, validate_project_name
 from made.commands.project_grp.project_functions import project_audit_name
 
 # from made.commands.project_grp.project_functions import project_init_wp
@@ -40,3 +41,18 @@ def test_project_audit_name_correct():
     test_name = "ds056_corectname"
     result = project_audit_name(project_folder=test_name)
     assert result is True
+
+def test_validate_project_name():
+
+    # name has a space should fail
+    assert validate_project_name('ds 045') == False
+
+    # name has a special character should fail
+    assert validate_project_name('ds#234') ==False
+    assert validate_project_name('ds!234') ==False
+    assert validate_project_name('ds$234') ==False
+    assert validate_project_name('ds£234') ==False
+    assert validate_project_name('ds&234') ==False
+    assert validate_project_name('ds*234') ==False
+    assert validate_project_name('ds(234') ==False
+    assert validate_project_name('ds)234') ==False
