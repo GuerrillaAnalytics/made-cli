@@ -57,8 +57,12 @@ class Config(object):
         self.config.set(self.section_wp, 'prefix', option_value)
 
     def get_project_name(self):
-        """Return the project name (inferred from project folder name"""
-        return os.path.basename(self.project_folder)
+        return self.config.get(Config.section_project,'name')
+
+    def add_option_project_name(self,option_value):
+        # TODO validate option value
+        self.config.set(self.section_project,'name', option_value)
+
 
     def get_option_wp_prefix(self):
         if not self.config.has_option(self.section_wp, 'prefix'):
@@ -72,6 +76,7 @@ class Config(object):
 
     def add_option_inputs_S3bucket(self, option_value):
         self.config.set(self.section_inputs, 'bucket', option_value)
+
 
     def get_S3bucket_name(self):
         return self.config.get(Config.section_inputs,'bucket')

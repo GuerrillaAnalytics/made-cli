@@ -40,4 +40,5 @@ def test_get_project_name():
     temp_location = tempfile.mkdtemp()
     project_folder = os.path.join(temp_location,"test_project_folder")
     test_config = Config(project_folder )
-    assert test_config.get_project_name()==os.path.basename("test_project_folder")
+    test_config.add_option_project_name("test_project")
+    assert test_config.get_project_name()==os.path.basename("test_project")
