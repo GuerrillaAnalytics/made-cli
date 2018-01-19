@@ -2,7 +2,7 @@ import os
 import logging
 import click
 
-from made.commands.inputs_grp.input_functions import validate_input_id
+from made.commands.inputs_grp.input_functions import validate_input_version
 from made.controllers.config import Config
 from made.controllers.inputs import input_manager_factory
 from made.commands.project_grp import project_functions

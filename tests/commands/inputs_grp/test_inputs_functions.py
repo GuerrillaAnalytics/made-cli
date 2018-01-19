@@ -1,7 +1,7 @@
 import os
 import sys
 
-from made.commands.inputs_grp.input_functions import validate_input_id
+from made.commands.inputs_grp.input_functions import  validate_input_version
 from made.controllers.config import Config
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -14,12 +14,12 @@ import pytest
 from made.controllers.inputs.inputs_functions import input_audit_path
 
 
-def test_validate_input_id():
-    assert validate_input_id('34') == True
-    assert validate_input_id('wp34') == False
-    assert validate_input_id('') == False
-    assert validate_input_id(' 45 ') == False
-    assert validate_input_id('-45') == False
+def test_validate_input_version():
+    assert validate_input_version('34') == True
+    assert validate_input_version('wp34') == False
+    assert validate_input_version('') == False
+    assert validate_input_version(' 45 ') == False
+    assert validate_input_version('-45') == False
 
 def test_input_audit_path_wrong_subfolder():
     location = tempfile.mkdtemp()
