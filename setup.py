@@ -1,8 +1,8 @@
-"""
-A working example of nested Python Click commands
-"""
+"""A working example of nested Python Click commands."""
 from setuptools import Command, find_packages, setup
+
 from os.path import abspath, dirname, join
+
 from made import __version__
 from subprocess import call
 
@@ -15,6 +15,7 @@ with open(join(this_dir, 'README.rst'), encoding='utf-8') as file:
 
 class RunTests(Command):
     """Run all tests."""
+
     description = 'run tests'
     user_options = []
 
@@ -28,6 +29,7 @@ class RunTests(Command):
         """Run all tests!"""
         errno = call(['py.test', '--cov=made', '--cov-report=term-missing'])
         raise SystemExit(errno)
+
 
 setup(
     name='made',
@@ -52,7 +54,7 @@ setup(
         # As from http://pypi.python.org/pypi?%3Aaction=list_classifiers
         # 'Development Status :: 1 - Planning',
         # 'Development Status :: 2 - Pre-Alpha',
-         'Development Status :: 3 - Alpha',
+        'Development Status :: 3 - Alpha',
         # 'Development Status :: 4 - Beta',
         # 'Development Status :: 5 - Production/Stable',
         # 'Development Status :: 6 - Mature',

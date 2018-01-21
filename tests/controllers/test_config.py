@@ -13,7 +13,7 @@ def test_constructor():
     assert test_config.section_inputs == "inputs"
     assert test_config.section_project == "project"
     assert test_config.config.sections().__len__() == 4
-    assert test_config.has_section_wp() == True
+    assert test_config.has_section_wp() is True
 
 
 def test_add_option_input_S3bucket():

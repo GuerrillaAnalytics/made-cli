@@ -1,27 +1,27 @@
+"""Tests for the inputs functions file."""
 import os
-import sys
 
 from made.commands.inputs_grp.input_functions import  validate_input_version
-from made.controllers.config import Config
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import errno
 import os
 import shutil
 import tempfile
-import pytest
 
 from made.controllers.inputs.inputs_functions import input_audit_path
 
 
 def test_validate_input_version():
-    assert validate_input_version('34') == True
-    assert validate_input_version('wp34') == False
-    assert validate_input_version('') == False
-    assert validate_input_version(' 45 ') == False
-    assert validate_input_version('-45') == False
+    """Test that input versions are correctly identified."""
+    assert validate_input_version('34') is True
+    assert validate_input_version('wp34') is False
+    assert validate_input_version('') is False
+    assert validate_input_version(' 45 ') is False
+    assert validate_input_version('-45') is False
+
 
 def test_input_audit_path_wrong_subfolder():
+    """Not sure what this does."""
     location = tempfile.mkdtemp()
     os.chdir(location)
 
@@ -37,6 +37,7 @@ def test_input_audit_path_wrong_subfolder():
 
 
 def test_input_audit_path_file_in_subfolder():
+    """Test that a file in a subfolder fails."""
     location = tempfile.mkdtemp()
     os.chdir(location)
 
@@ -62,6 +63,7 @@ def test_input_audit_path_file_in_subfolder():
 
 
 def test_input_audit_path_empty_subfolder():
+    """Test the audit path function."""
     location = tempfile.mkdtemp()
     os.chdir(location)
 
@@ -70,4 +72,3 @@ def test_input_audit_path_empty_subfolder():
 
     assert len(result) >= 1
     assert result[0][0] == "ERR0003"
-
