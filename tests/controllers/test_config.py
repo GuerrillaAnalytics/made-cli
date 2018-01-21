@@ -1,9 +1,13 @@
+"""Tests of the Config class."""
+
 import os
 import tempfile
+
 from made.controllers.config import Config
 
 
 def test_constructor():
+    """Test that the constructor runs correctly."""
     location = tempfile.mkdtemp()
     test_config = Config(location)
 
@@ -17,14 +21,17 @@ def test_constructor():
 
 
 def test_add_option_input_S3bucket():
+    """Test that an S3 option can be added correctly."""
     location = tempfile.mkdtemp()
     test_config = Config(location)
     test_config.add_option_inputs_S3bucket("bucket_value")
-    assert test_config.config.get(test_config.section_inputs, 'bucket') == "bucket_value"
+    assert test_config.config.get(
+        test_config.section_inputs,
+        'bucket') == "bucket_value"
 
 
 def test_write():
-    """Check that file is written out"""
+    """Check that file is written out."""
     location = tempfile.mkdtemp()
 
     # Config file should not exist yet
@@ -36,9 +43,11 @@ def test_write():
     # Config file should exist now
     assert os.path.isfile(os.path.join(location, Config.config_file_name))
 
+
 def test_get_project_name():
+    """Test that the correct project name is returned."""
     temp_location = tempfile.mkdtemp()
-    project_folder = os.path.join(temp_location,"test_project_folder")
-    test_config = Config(project_folder )
+    project_folder = os.path.join(temp_location, "test_project_folder")
+    test_config = Config(project_folder)
     test_config.add_option_project_name("test_project")
-    assert test_config.get_project_name()==os.path.basename("test_project")
+    assert test_config.get_project_name() == os.path.basename("test_project")

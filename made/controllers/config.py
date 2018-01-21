@@ -2,6 +2,7 @@ import configparser
 import os
 import logging
 
+
 class Config(object):
     """ Class to manage accessing and writing a configuration
     """
@@ -57,12 +58,11 @@ class Config(object):
         self.config.set(self.section_wp, 'prefix', option_value)
 
     def get_project_name(self):
-        return self.config.get(Config.section_project,'name')
+        return self.config.get(Config.section_project, 'name')
 
-    def add_option_project_name(self,option_value):
+    def add_option_project_name(self, option_value):
         # TODO validate option value
-        self.config.set(self.section_project,'name', option_value)
-
+        self.config.set(self.section_project, 'name', option_value)
 
     def get_option_wp_prefix(self):
         if not self.config.has_option(self.section_wp, 'prefix'):
@@ -77,12 +77,11 @@ class Config(object):
     def add_option_inputs_S3bucket(self, option_value):
         self.config.set(self.section_inputs, 'bucket', option_value)
 
-
     def get_S3bucket_name(self):
-        return self.config.get(Config.section_inputs,'bucket')
+        return self.config.get(Config.section_inputs, 'bucket')
 
     def get_inputs_root(self):
-        return self.config.get(Config.section_inputs,'root')
+        return self.config.get(Config.section_inputs, 'root')
 
     def write(self):
 

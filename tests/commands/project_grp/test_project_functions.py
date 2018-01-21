@@ -2,14 +2,15 @@
 import os
 import shutil
 import tempfile
-import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from made.commands.project_grp.project_functions import project_create_folder, project_configure, validate_project_name
-from made.commands.project_grp.project_functions import project_audit_name
+
+from made.commands.project_grp.project_functions \
+    import project_audit_name
+from made.commands.project_grp.project_functions \
+    import project_create_folder, validate_project_name
 
 
 def test_project_create_folder():
-
+    """Test that the project folder is created in the right format."""
     location = tempfile.mkdtemp()
     os.chdir(location)
     new_folder = project_create_folder(id="ds134", label="project")
@@ -43,7 +44,7 @@ def test_project_audit_name_correct():
 def test_validate_project_name():
     """Test that the validate project name function works."""
     # name has a space should fail
-    assert validate_project_name('ds 045') == False
+    assert validate_project_name('ds 045') is False
 
     # name has a special character should fail
     assert validate_project_name('ds#234') is False

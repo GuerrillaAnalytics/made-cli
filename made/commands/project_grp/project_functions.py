@@ -6,6 +6,7 @@ import click
 from made.controllers.config import Config
 import logging
 
+
 class ProjectException(Exception):
     pass
 
@@ -44,7 +45,10 @@ def make_folder_if_doesnt_exist(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
     else:
-        click.echo(click.style("The folder %s already exists" % folder, fg='yellow'))
+        click.echo(
+            click.style(
+                "The folder %s already exists" %
+                folder, fg='yellow'))
     return folder
 
 
@@ -52,7 +56,8 @@ def project_init_pm_folder(project_folder_path):
     """Create a pm folder tree in a given project folder"""
 
     # Make the pm folder tree
-    pm_folder = make_folder_if_doesnt_exist(os.path.join(project_folder_path, "pm"))
+    pm_folder = make_folder_if_doesnt_exist(
+        os.path.join(project_folder_path, "pm"))
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "01_initiate"))
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "02_plan"))
     make_folder_if_doesnt_exist(os.path.join(pm_folder, "03_execute"))
@@ -70,7 +75,10 @@ def project_create_folder_structures(project_folder_path):
 
     # create other folder structures
     make_folder_if_doesnt_exist(os.path.join(project_folder_path, "wp"))
-    make_folder_if_doesnt_exist(os.path.join(project_folder_path, "workspaces"))
+    make_folder_if_doesnt_exist(
+        os.path.join(
+            project_folder_path,
+            "workspaces"))
 
     pass
 
@@ -122,7 +130,10 @@ def project_configure(folder):
     # project level configurations
     while True:
         project_name = \
-            click.prompt('Please enter a project name',type = str, default='ds_xxx')
+            click.prompt(
+                'Please enter a project name',
+                type=str,
+                default='ds_xxx')
 
         # TODO validate that the project name is the right format
         is_valid = validate_project_name(project_name)
@@ -135,7 +146,10 @@ def project_configure(folder):
     # Enter a work product prefix
     while True:
         work_product_prefix = \
-            click.prompt('Please enter a work product prefix', type=str, default=configuration.get_option_wp_prefix())
+            click.prompt(
+                'Please enter a work product prefix',
+                type=str,
+                default=configuration.get_option_wp_prefix())
 
         if " " in work_product_prefix:
             continue
@@ -146,20 +160,24 @@ def project_configure(folder):
     # Input folder types
     while True:
         input_root = \
-            click.prompt("Enter the input folder root [s3/file]", type=click.Choice(["s3","file"]), default="s3")
-        logging.getLogger('my logger').debug("Input root was set to: " + input_root)
+            click.prompt(
+                "Enter the input folder root [s3/file]", type=click.Choice(["s3", "file"]), default="s3")
+        logging.getLogger('my logger').debug(
+            "Input root was set to: " + input_root)
 
         if " " in input_root:
-                continue
+            continue
 
         configuration.add_option_inputs_root(input_root)
 
         # if S3, grab the bucket name
         if input_root == 's3':
             while True:
-                bucket_name=configuration.get_S3bucket_name()
-                bucket_name=click.prompt("Enter s3 bucket name", type =str,default=bucket_name)
-                logging.getLogger('my logger').debug("S3 bucket name was set to: " + bucket_name)
+                bucket_name = configuration.get_S3bucket_name()
+                bucket_name = click.prompt(
+                    "Enter s3 bucket name", type=str, default=bucket_name)
+                logging.getLogger('my logger').debug(
+                    "S3 bucket name was set to: " + bucket_name)
 
                 # TODO validate bucket name format
 
@@ -167,7 +185,8 @@ def project_configure(folder):
 
                 break
         else:
-            logging.getLogger('my logger').debug('Prompting for file root option')
+            logging.getLogger('my logger').debug(
+                'Prompting for file root option')
         break
 
     # save the configuration

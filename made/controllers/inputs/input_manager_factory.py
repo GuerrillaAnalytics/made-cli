@@ -18,7 +18,7 @@ def create_folder_path(project_folder_name, source_id, source_label, version):
     # instead of a file
     s = \
         "/".join(
-            ["projects",project_folder_name,"inputs", str(source_id) + "_" + source_label, version, "raw","data",""])
+            ["projects", project_folder_name, "inputs", str(source_id) + "_" + source_label, version, "raw", "data", ""])
     return s
 
 
@@ -30,10 +30,12 @@ class InputManagerFactory(object):
         type = config.config.get(Config.section_inputs, "root")
 
         if type == "s3":
-            logging.getLogger("my logger").debug("Creating an s3 input manager")
+            logging.getLogger("my logger").debug(
+                "Creating an s3 input manager")
             return S3InputManager(config)
         if type == "file":
-            logging.getLogger("my logger").debug("Creating an file input manager")
+            logging.getLogger("my logger").debug(
+                "Creating an file input manager")
             return FileInputManager(config)
         assert 0, "Bad manager creation: " + type
 
@@ -83,12 +85,13 @@ class S3InputManager(InputManager):
 
         # TODO Get the root path for the input and check it exists
         inputs_root = self.configuration.get_inputs_root()
-        logger = logging.getLogger("my logger").debug("Inputs root is: " + inputs_root)
+        logger = logging.getLogger("my logger").debug(
+            "Inputs root is: " + inputs_root)
         # TODO Check the source ID is provided and correct
         # TODO Check the source label is provided and correct
         # TODO Build path to new source
-        project_name ='enda'
-        project_name=self.configuration.get_project_name()
+        project_name = 'enda'
+        project_name = self.configuration.get_project_name()
         version = "01"
         s = create_folder_path(project_name, source_id, source_label, version)
         logging.getLogger('my logger').debug("s3 input folder: " + s)
@@ -106,7 +109,7 @@ class S3InputManager(InputManager):
             logging.getLogger('my logger').info(response)
         except botocore.exceptions.ClientError:
             logging.getLogger('my logger') \
-                .exception("Problem creating folder in s3 bucket" \
+                .exception("Problem creating folder in s3 bucket"
                            " Check your profile permissions and encryption settings")
 
     def create_new_source_version(self):
@@ -125,7 +128,9 @@ if __name__ == "__main__":
     # obj.create_new_source(45,'transactions')
     dev = boto3.session.Session(profile_name='dpp1')
     client = dev.client('s3')
-    result = client.list_objects(Bucket="js-dpp-lab-ds1-data-dev", Prefix="projects/")
+    result = client.list_objects(
+        Bucket="js-dpp-lab-ds1-data-dev",
+        Prefix="projects/")
     print(result)
     print("")
     dev = boto3.session.Session(profile_name='dpp1')

@@ -30,7 +30,8 @@ def project_create():
     pass
 
 
-@project_create.command('folder', help="create project folder with the correct format name")
+@project_create.command(
+    'folder', help="create project folder with the correct format name")
 # @click.option('--ttl', '-t')
 @click.argument('id')
 @click.argument('label')
@@ -50,7 +51,8 @@ def project_audit():
 def project_audit_name(ctx):
 
     if project_functions.is_project_initialised(os.getcwd()):
-        if not project_functions.project_audit_name(project_folder=os.getcwd()):
+        if not project_functions.project_audit_name(
+                project_folder=os.getcwd()):
             click.echo("Project folder name does not match the correct pattern")
     else:
         click.echo("You are not in an initialised project folder")

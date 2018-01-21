@@ -26,7 +26,8 @@ def input_create(ctx):
     while True:
         user_source_id = click.prompt('Please enter an input ID', type=str)
         if not validate_input_id(user_source_id):
-            logging.getLogger('my logger').debug("Input ID has invalid format "+ user_source_id)
+            logging.getLogger('my logger').debug(
+                "Input ID has invalid format " + user_source_id)
             continue
 
         break
@@ -40,9 +41,9 @@ def input_create(ctx):
             continue
         break
 
-    config=Config(os.getcwd())
+    config = Config(os.getcwd())
     input_manager = input_manager_factory.InputManagerFactory.create(config)
-    input_manager.create_new_source(user_source_id,user_source_name)
+    input_manager.create_new_source(user_source_id, user_source_name)
     pass
 
 

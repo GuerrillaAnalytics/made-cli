@@ -53,14 +53,20 @@ if __name__ == '__main__':
     # Check if project is configured
     configuration = made.controllers.config.Config(os.getcwd())
     if not configuration.has_config_file():
-        click.echo(click.style('A project has not been configured in this folder', fg='yellow'))
+        click.echo(
+            click.style(
+                'A project has not been configured in this folder',
+                fg='yellow'))
         while True:
-            if click.confirm('Do you want to configure a project here?', abort=True):
-                logging.getLogger("my logger").debug("Configuring project based on confirmation prompt")
+            if click.confirm(
+                    'Do you want to configure a project here?', abort=True):
+                logging.getLogger("my logger").debug(
+                    "Configuring project based on confirmation prompt")
                 project_functions.project_configure(os.getcwd())
                 break
 
     else:
         logging.getLogger("my logger").debug("Project already configured here")
-        logging.getLogger("my logger").debug("Using this configuration and continuing with command")
+        logging.getLogger("my logger").debug(
+            "Using this configuration and continuing with command")
         cli()

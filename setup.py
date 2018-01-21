@@ -1,10 +1,8 @@
 """A working example of nested Python Click commands."""
-from setuptools import Command, find_packages, setup
-
 from os.path import abspath, dirname, join
-
-from made import __version__
 from subprocess import call
+
+from setuptools import Command, find_packages, setup
 
 dependencies = ['click', 'boto3']
 

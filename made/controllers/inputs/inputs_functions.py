@@ -3,7 +3,6 @@ import os
 import re
 
 
-
 def input_audit_path(input_base_folder):
     """ Audit an input folder to check it
     has the right path formats
@@ -33,25 +32,37 @@ def input_audit_path(input_base_folder):
             # Test the folder has an acceptable name
             matchResult = re.match(pattern, item)
             if matchResult is None:
-                tup = ("ERR0002", item, "Incorrectly formatted input version folder")
+                tup = (
+                    "ERR0002",
+                    item,
+                    "Incorrectly formatted input version folder")
                 result.append(tup)
 
             # Check each version folder only has a formatted or raw subfolder, no files
             # and not other subfolders
             version_subfolders = os.listdir(item)
             if len(version_subfolders) == 0:
-                tup = ("ERR0004", version_subfolders, "Version folder contains no raw or formatted subfolder")
+                tup = (
+                    "ERR0004",
+                    version_subfolders,
+                    "Version folder contains no raw or formatted subfolder")
                 result.append(tup)
 
             else:
                 for version_subfolder in version_subfolders:
                     # if there is a file, then error
                     if not os.path.isdir(version_subfolder):
-                        tup = ("ERR0006", version_subfolder, "Unexpected file in version folder")
+                        tup = (
+                            "ERR0006",
+                            version_subfolder,
+                            "Unexpected file in version folder")
                         result.append(tup)
                     else:
                         if version_subfolder != "formatted" and version_subfolder != "raw":
-                            tup = ("ERR0007", version_subfolder, "Unexpected folder in version folder")
+                            tup = (
+                                "ERR0007",
+                                version_subfolder,
+                                "Unexpected folder in version folder")
                             result.append(tup)
 
     return result
