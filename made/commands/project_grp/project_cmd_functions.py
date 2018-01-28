@@ -103,7 +103,9 @@ def project_audit_tree(project_folder):
 
 
 def project_configure(folder):
-    """Create a minimum configuration for a project"""
+    """
+    Create a minimum configuration for a project
+    """
 
     if folder == ".":
         folder = os.getcwd()

@@ -3,7 +3,7 @@ import os
 
 import click
 
-from made.commands.project_grp import project_functions as project_functions
+from made.commands.project_grp import project_cmd_functions
 
 
 @click.group()
@@ -21,7 +21,7 @@ def project_configure(ctx, folder):
     logging.getLogger('my logger'). \
         debug('Configuring project in: ' + folder)
 
-    project_functions.project_configure(folder)
+    project_cmd_functions.project_configure(folder)
 
     # project_functions.project_create_folder_structures(project_folder_path=folder)
     pass
@@ -39,7 +39,7 @@ def project_create():
 @click.argument('label')
 @click.pass_obj
 def project_create_folder(ctx, id, label):
-    project_functions.project_create_folder(id, label)
+    project_cmd_functions.project_create_folder(id, label)
     pass
 
 
@@ -54,8 +54,8 @@ def project_audit():
 @project_audit.command('name', help="audit project folder name")
 @click.pass_obj
 def project_audit_name(ctx):
-    if project_functions.is_project_initialised(os.getcwd()):
-        if not project_functions.project_audit_name(
+    if project_cmd_functions.is_project_initialised(os.getcwd()):
+        if not project_cmd_functions.project_audit_name(
                 project_folder=os.getcwd()):
             click.echo("Project folder name does not match "
                        "the correct pattern")

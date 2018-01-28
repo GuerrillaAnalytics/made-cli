@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 """Tests for the Config class."""
 
+import pytest
 from click.testing import CliRunner
 
 from made import cli
 
-import pytest
-
 
 @pytest.fixture
 def runner():
-    """TODO."""
+    """Command line runner for all tests"""
     return CliRunner()
 
 
@@ -21,3 +20,10 @@ def test_cli(runner):
     assert not result.exception
     # assert result.output.strip() == 'Hello, world.'
     print(result.output.strip())
+
+
+def test_cli_unconfigured_folder(runner):
+    #
+    #     with runner.isolated_filesystem():
+    #         result=runner.invoke()
+    pass
