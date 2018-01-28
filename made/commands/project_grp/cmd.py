@@ -11,7 +11,8 @@ def project(ctx):
     pass
 
 
-@project.command('configure', help="Initialise a project configuration in a particular folder")
+@project.command('configure',
+                 help="Initialise a project configuration in a folder")
 @click.argument('folder', default=".", required=False)
 # @click.option('--organization', '-o', default='')
 # @click.argument('url')

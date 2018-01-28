@@ -16,18 +16,14 @@ def test_constructor():
     assert test_config.section_wp == "work_products"
     assert test_config.section_inputs == "inputs"
     assert test_config.section_project == "project"
-    assert test_config.config.sections().__len__() == 4
-    assert test_config.has_section_wp() is True
 
 
-def test_add_option_input_S3bucket():
+def test_add_option_input_s3bucket():
     """Test that an S3 option can be added correctly."""
     location = tempfile.mkdtemp()
     test_config = Config(location)
     test_config.add_option_inputs_S3bucket("bucket_value")
-    assert test_config.config.get(
-        test_config.section_inputs,
-        'bucket') == "bucket_value"
+    assert test_config.get_S3bucket_name() == "bucket_value"
 
 
 def test_write():
