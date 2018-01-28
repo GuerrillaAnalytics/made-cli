@@ -1,5 +1,11 @@
+import logging
 import os
 import re
+
+import click
+
+from made.controllers.config import Config
+from made.controllers.inputs import input_manager_factory
 
 
 def input_audit_path(input_base_folder):
@@ -82,3 +88,27 @@ def validate_input_version(input_version):
 def format_input_version(input_version):
     """Format an input version to have leading zeroes"""
     return str(input_version).zfill(2)
+
+
+def cmd_input_create():
+    while True:
+        user_source_id = click.prompt('Please enter an input ID', type=str)
+        if not validate_input_version(user_source_id):
+            logging.getLogger('my logger').debug(
+                "Input ID has invalid format " + user_source_id)
+            continue
+
+        break
+
+    # source name
+    while True:
+        user_source_name = click.prompt('Please enter a schema name', type=str)
+        if len(user_source_name.strip()) == 0:
+            continue
+        if " " in user_source_name.strip():
+            continue
+        break
+
+    config = Config(os.getcwd())
+    input_manager = input_manager_factory.InputManagerFactory.create(config)
+    input_manager.create_new_source(user_source_id, user_source_name)
