@@ -12,10 +12,10 @@ import sys
 import click
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from made.commands.project_grp import project_cmd_functions
+from made.cmds.project_grp import project_cmd_functions
 import made.controllers.config
-from made.commands.project_grp.cmd import project
-from made.commands.inputs_grp.cmd import input
+from made.cmds.project_grp.cmd import project
+from made.cmds.inputs_grp.cmd import input
 
 
 @click.group()
@@ -34,6 +34,7 @@ def cli():
                     'Do you want to configure a project here?', abort=True):
                 logging.getLogger("my logger").debug(
                     "Configuring project based on confirmation prompt")
+
                 project_cmd_functions.project_configure(os.getcwd())
 
                 break

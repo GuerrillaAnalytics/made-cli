@@ -4,7 +4,7 @@ import os
 import shutil
 import tempfile
 
-from made.commands.inputs_grp.input_functions import validate_input_version
+from made.cmds.inputs_grp.input_functions import validate_input_version
 from made.controllers.inputs.inputs_functions import input_audit_path
 
 

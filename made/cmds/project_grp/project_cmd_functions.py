@@ -102,7 +102,7 @@ def project_audit_tree(project_folder):
     pass
 
 
-def project_configure(folder):
+def project_configure_project_name(folder):
     """
     Create a minimum configuration for a project
     """
@@ -128,6 +128,14 @@ def project_configure(folder):
             break
 
         logging.getLogger('my logger').info(('Not a valid project name'))
+
+    # save the configuration
+    configuration.write()
+
+
+def project_configure(folder):
+
+    configuration = Config(folder)
 
     # Enter a work product prefix
     while True:
@@ -160,6 +168,7 @@ def project_configure(folder):
         # if S3, grab the bucket name
         if input_root == 's3':
             while True:
+                # Bucket name
                 bucket_name = configuration.get_S3bucket_name()
                 bucket_name = click.prompt(
                     "Enter s3 bucket name", type=str, default=bucket_name)
@@ -167,13 +176,22 @@ def project_configure(folder):
                     "S3 bucket name was set to: " + bucket_name)
 
                 # TODO validate bucket name format
-
                 configuration.add_option_inputs_S3bucket(bucket_name)
 
                 break
+            while True:
+                # server side encryption
+                sse = configuration.get_option_s3_encryption()
+                sse = click.prompt("Server side encryption type [AES256/kms]",
+                                   default=sse,
+                                   type=click.Choice(["AES256", "kms"]))
+                logging.getLogger('my logger').debug("SSE set to: " + sse)
+                configuration.add_option_s3_encryption(sse)
+
         else:
             logging.getLogger('my logger').debug(
                 'Prompting for file root option')
+            logging.getLogger('my logger').error('Not implemented')
         break
 
     # save the configuration
