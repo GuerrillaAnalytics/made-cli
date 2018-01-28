@@ -1,6 +1,3 @@
-import string
-
-
 def validate_input_version(input_version):
     """Check that an input id is a number without spaces"""
     if ' ' in input_version:

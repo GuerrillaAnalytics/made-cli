@@ -1,13 +1,9 @@
-import os
 import abc
-import boto3
 import logging
-import sys
+
+import boto3
 import botocore
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../'))
-
-from made.controllers import config
 from made.controllers.config import Config
 
 
@@ -18,12 +14,17 @@ def create_folder_path(project_folder_name, source_id, source_label, version):
     # instead of a file
     s = \
         "/".join(
-            ["projects", project_folder_name, "inputs", str(source_id) + "_" + source_label, version, "raw", "data", ""])
+            ["projects", project_folder_name,
+             "inputs",
+             str(source_id) + "_" + source_label,
+             version, "raw", "data",
+             ""])
     return s
 
 
 class InputManagerFactory(object):
-    """ Class to manage creation of appropriate input managers
+    """
+    Class to manage creation of appropriate input managers
     """
 
     def create(config):
@@ -49,14 +50,18 @@ class InputManager(abc.ABC):
 
     @abc.abstractmethod
     def create_new_source(self):
-        """Create an input source within an
-        input folder with the right folder path and structure"""
+        """
+        Create an input source within an
+        input folder with the right folder path and structure
+        """
         pass
 
     @abc.abstractmethod
     def create_new_source_version(self):
-        """Create an input source version within an
-        input source with the right folder path and structure"""
+        """
+        Create an input source version within an
+        input source with the right folder path and structure
+        """
         pass
 
     @abc.abstractmethod
@@ -81,11 +86,11 @@ class FileInputManager(InputManager):
 
 class S3InputManager(InputManager):
     def create_new_source(self, source_id, source_label):
-        """ Create a new S3 source folder"""
+        """Create a new S3 source folder"""
 
         # TODO Get the root path for the input and check it exists
         inputs_root = self.configuration.get_inputs_root()
-        logger = logging.getLogger("my logger").debug(
+        logging.getLogger("my logger").debug(
             "Inputs root is: " + inputs_root)
         # TODO Check the source ID is provided and correct
         # TODO Check the source label is provided and correct
@@ -109,8 +114,9 @@ class S3InputManager(InputManager):
             logging.getLogger('my logger').info(response)
         except botocore.exceptions.ClientError:
             logging.getLogger('my logger') \
-                .exception("Problem creating folder in s3 bucket"
-                           " Check your profile permissions and encryption settings")
+                .exception("Problem creating folder in s3 bucket. "
+                           "Check your profile permissions and "
+                           "encryption settings")
 
     def create_new_source_version(self):
         print("not implemented yet")

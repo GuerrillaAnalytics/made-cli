@@ -4,20 +4,14 @@ https://stackoverflow.com/questions/34643620/
 how-can-i-split-my-click-commands-each-with-a-set-of-sub-commands-into-multipl
 
 """
-import sys
-import os.path
+
 import logging
-
-# bizarre fix to PYTHONPATH problems
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import click
 import sys
 import os.path
-
+import click
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from made.commands.project_grp import project_functions
 import made.controllers.config
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from made.commands.project_grp.cmd import project
 from made.commands.inputs_grp.cmd import input
 

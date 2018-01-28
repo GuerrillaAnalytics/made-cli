@@ -4,7 +4,8 @@ import logging
 
 
 class Config(object):
-    """ Class to manage accessing and writing a configuration
+    """
+    Class to manage accessing and writing a configuration
     """
 
     config_file_name = "made.config"
@@ -71,7 +72,7 @@ class Config(object):
         return self.config.get(self.section_wp, 'prefix')
 
     def add_option_inputs_root(self, option_value='s3'):
-        """ Input folder type (S3 or file) """
+        """Input folder type (S3 or file)"""
         self.config.set(self.section_inputs, 'root', option_value)
 
     def add_option_inputs_S3bucket(self, option_value):

@@ -1,10 +1,11 @@
-import string
+import logging
 import os
 import re
+import string
+
 import click
 
 from made.controllers.config import Config
-import logging
 
 
 class ProjectException(Exception):
@@ -12,17 +13,17 @@ class ProjectException(Exception):
 
 
 def validate_project_name(project_name):
-    """ Validates a project name to certain rules"""
+    """Validates a project name to certain rules"""
 
     if " " in project_name:
         return False
 
     # create a set of invalid characters
-    invalidChars = set(string.punctuation.replace("_", ""))
-    invalidChars.add('£')
+    invalid_chars = set(string.punctuation.replace("_", ""))
+    invalid_chars.add('£')
 
     # chekc if the name contains any of the invalid characters
-    if any(char in invalidChars for char in project_name):
+    if any(char in invalid_chars for char in project_name):
         return False
 
     return True
@@ -66,9 +67,10 @@ def project_init_pm_folder(project_folder_path):
 
 
 def project_create_folder_structures(project_folder_path):
-    """Creates a project structure.
-    Assumes current directory
-    is root of project"""
+    """
+    Creates a project structure.
+    Assumes current directory is root of project
+    """
 
     # create the pm folder structure
     project_init_pm_folder(project_folder_path)
@@ -98,18 +100,18 @@ def project_create_folder(id, label):
 
 
 def project_audit_name(project_folder):
-    """ Audit the project folder name"""
+    """Audit the project folder name"""
 
     project_folder = os.path.basename(project_folder)
     print("Project folder: " + project_folder)
     pattern = re.compile("^ds[0-9]{3}_[[a-z0-9]*]?$")
 
     # Test the folder has an acceptable name
-    matchResult = re.match(pattern, project_folder)
-    if matchResult is None:
+    match_result = re.match(pattern, project_folder)
+    if match_result is None:
         return False
     else:
-        print("Matched: " + str(matchResult.group(0)))
+        print("Matched: " + str(match_result.group(0)))
         return True
 
 
@@ -119,7 +121,7 @@ def project_audit_tree(project_folder):
 
 
 def project_configure(folder):
-    """ Create a minimum configuration for a project"""
+    """Create a minimum configuration for a project"""
 
     if folder == ".":
         folder = os.getcwd()
@@ -161,7 +163,8 @@ def project_configure(folder):
     while True:
         input_root = \
             click.prompt(
-                "Enter the input folder root [s3/file]", type=click.Choice(["s3", "file"]), default="s3")
+                "Enter the input folder root [s3/file]",
+                type=click.Choice(["s3", "file"]), default="s3")
         logging.getLogger('my logger').debug(
             "Input root was set to: " + input_root)
 

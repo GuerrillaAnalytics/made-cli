@@ -1,10 +1,9 @@
-import errno
 import os
 import re
 
 
 def input_audit_path(input_base_folder):
-    """ Audit an input folder to check it
+    """Audit an input folder to check it
     has the right path formats
     * no files present
     * only folders with a 2 digit version number
@@ -30,22 +29,24 @@ def input_audit_path(input_base_folder):
             pattern = re.compile("^[0-9]{3}$")
 
             # Test the folder has an acceptable name
-            matchResult = re.match(pattern, item)
-            if matchResult is None:
+            match_result = re.match(pattern, item)
+            if match_result is None:
                 tup = (
                     "ERR0002",
                     item,
                     "Incorrectly formatted input version folder")
                 result.append(tup)
 
-            # Check each version folder only has a formatted or raw subfolder, no files
+            # Check each version folder only has a formatted or
+            # raw subfolder, no files
             # and not other subfolders
             version_subfolders = os.listdir(item)
             if len(version_subfolders) == 0:
                 tup = (
                     "ERR0004",
                     version_subfolders,
-                    "Version folder contains no raw or formatted subfolder")
+                    "Version folder contains no "
+                    "raw or formatted subfolder")
                 result.append(tup)
 
             else:
@@ -58,7 +59,8 @@ def input_audit_path(input_base_folder):
                             "Unexpected file in version folder")
                         result.append(tup)
                     else:
-                        if version_subfolder != "formatted" and version_subfolder != "raw":
+                        if version_subfolder != "formatted" \
+                                and version_subfolder != "raw":
                             tup = (
                                 "ERR0007",
                                 version_subfolder,
