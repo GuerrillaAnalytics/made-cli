@@ -3,8 +3,8 @@ import os
 
 import click
 
-from made.cmds.project_grp import project_cmd_functions
-from made.cmds.project_grp.project_cmd_functions \
+from made.controllers.projects import project_cmd_functions
+from made.controllers.projects.project_cmd_functions \
     import project_configure_project_name
 
 

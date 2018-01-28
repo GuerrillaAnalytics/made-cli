@@ -3,7 +3,7 @@ import os
 import shutil
 import tempfile
 
-from made.cmds.project_grp.project_cmd_functions \
+from made.controllers.projects.project_cmd_functions \
     import project_create_folder, validate_project_name
 
 

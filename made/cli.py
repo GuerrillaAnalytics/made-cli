@@ -12,7 +12,7 @@ import sys
 import click
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from made.cmds.project_grp import project_cmd_functions
+from made.controllers.projects import project_cmd_functions
 import made.controllers.config
 from made.cmds.project_grp.cmd import project
 from made.cmds.inputs_grp.cmd import input
