@@ -33,3 +33,5 @@ def test_validate_project_name():
     assert validate_project_name('ds*234') is False
     assert validate_project_name('ds(234') is False
     assert validate_project_name('ds)234') is False
+
+    # assert validate_project_name('ds_234_') is False

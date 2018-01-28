@@ -43,7 +43,7 @@ def test_add_option_inputs_root():
     test_config = Config(location)
 
     assert test_config.get_inputs_root() == ''
-    
+
 
 def test_write():
     """Check that file is written out."""
