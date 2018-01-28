@@ -1,7 +1,6 @@
 import logging
 import os
 import re
-import string
 
 import click
 
@@ -15,16 +14,15 @@ class ProjectException(Exception):
 def validate_project_name(project_name):
     """Validates a project name to certain rules"""
 
-    if " " in project_name:
+    # Test the folder has an acceptable name
+    pattern = re.compile("^ds_[0-9]{3}(_[a-z0-9]*)?$")
+    match_result = re.match(pattern, project_name)
+    if match_result is None:
         return False
-
-    # create a set of invalid characters
-    invalid_chars = set(string.punctuation.replace("_", ""))
-    invalid_chars.add('£')
-
-    # chekc if the name contains any of the invalid characters
-    if any(char in invalid_chars for char in project_name):
-        return False
+    else:
+        logging.getLogger('my logger').debug(
+            "Matched: " + str(match_result.group(0)))
+        return True
 
     return True
 
@@ -89,7 +87,7 @@ def project_create_folder(id, label):
     """Creates a project folder if possible in the current directory"""
 
     project_name = id.lower() + "_" + label.lower()
-    project_audit_name(project_folder=project_name)
+    validate_project_name(project_name)
 
     # TODO check id doesn't exist in same directory
 
@@ -97,22 +95,6 @@ def project_create_folder(id, label):
     make_folder_if_doesnt_exist(project_location)
 
     return project_location
-
-
-def project_audit_name(project_folder):
-    """Audit the project folder name"""
-
-    project_folder = os.path.basename(project_folder)
-    print("Project folder: " + project_folder)
-    pattern = re.compile("^ds[0-9]{3}_[[a-z0-9]*]?$")
-
-    # Test the folder has an acceptable name
-    match_result = re.match(pattern, project_folder)
-    if match_result is None:
-        return False
-    else:
-        print("Matched: " + str(match_result.group(0)))
-        return True
 
 
 def project_audit_tree(project_folder):
