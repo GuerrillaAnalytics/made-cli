@@ -1,5 +1,6 @@
-import os
 import logging
+import os
+
 import click
 
 from made.commands.project_grp import project_functions as project_functions
@@ -14,11 +15,11 @@ def project(ctx):
 @project.command('configure',
                  help="Initialise a project configuration in a folder")
 @click.argument('folder', default=".", required=False)
-# @click.option('--organization', '-o', default='')
-# @click.argument('url')
 @click.pass_obj
 def project_configure(ctx, folder):
 
+    logging.getLogger('my logger'). \
+        debug('Configuring project in: ' + folder)
 
     project_functions.project_configure(folder)
 
@@ -50,7 +51,6 @@ def project_audit():
 @project_audit.command('name', help="audit project folder name")
 @click.pass_obj
 def project_audit_name(ctx):
-
     if project_functions.is_project_initialised(os.getcwd()):
         if not project_functions.project_audit_name(
                 project_folder=os.getcwd()):
