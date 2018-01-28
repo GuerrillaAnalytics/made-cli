@@ -57,6 +57,7 @@ if __name__ == '__main__':
                 logging.getLogger("my logger").debug(
                     "Configuring project based on confirmation prompt")
                 project_functions.project_configure(os.getcwd())
+
                 break
 
     else:

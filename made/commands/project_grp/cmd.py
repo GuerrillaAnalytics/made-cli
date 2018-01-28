@@ -1,5 +1,5 @@
 import os
-
+import logging
 import click
 
 from made.commands.project_grp import project_functions as project_functions
@@ -18,6 +18,7 @@ def project(ctx):
 # @click.argument('url')
 @click.pass_obj
 def project_configure(ctx, folder):
+
 
     project_functions.project_configure(folder)
 
