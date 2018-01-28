@@ -45,6 +45,9 @@ def project_create_folder(ctx, id, label):
 
 @project.group('audit', help="audit project structures")
 def project_audit():
+    """
+    Click command group for all audit activities
+    """
     pass
 
 

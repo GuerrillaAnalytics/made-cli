@@ -49,20 +49,39 @@ class Config(object):
 
     def get_option_wp_prefix(self):
 
-        return self.config[self.section_wp]['prefix']
+        try:
+            value = self.config[self.section_wp]['prefix']
+            return value
+        except KeyError:
+            logging.getLogger('my logger') \
+                .debug("wp prefix not specified yet")
+            return ""
 
     def add_option_inputs_root(self, option_value='s3'):
         """Input folder type (S3 or file)"""
+
         self.config[self.section_inputs]['root'] = option_value
 
     def add_option_inputs_S3bucket(self, option_value):
         self.config[self.section_inputs]['bucket'] = option_value
 
     def get_S3bucket_name(self):
-        return self.config[self.section_inputs]['bucket']
+
+        try:
+            result = self.config[self.section_inputs]['bucket']
+            return result
+        except KeyError:
+            logging.getLogger('my logger') \
+                .debug("S3 bucket name not specified yet")
+            return ''
 
     def get_inputs_root(self):
-        return self.config[self.section_inputs]['root']
+
+        try:
+            result = self.config[self.section_inputs]['root']
+            return result
+        except KeyError:
+            return ''
 
     def write(self):
         self.config.write()

@@ -6,9 +6,11 @@ how-can-i-split-my-click-commands-each-with-a-set-of-sub-commands-into-multipl
 """
 
 import logging
-import sys
 import os.path
+import sys
+
 import click
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from made.commands.project_grp import project_functions
 import made.controllers.config

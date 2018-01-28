@@ -18,6 +18,18 @@ def test_constructor():
     assert test_config.section_project == "project"
 
 
+def test_get_wp_prefix():
+    location = tempfile.mkdtemp()
+    test_config = Config(location)
+
+    # wp prefix should be blank if nothing has been specified yet
+    assert test_config.get_option_wp_prefix() == ''
+
+    # make sure the correct prefix is now returned
+    test_config.add_option_wp_prefix('tt')
+    assert test_config.get_option_wp_prefix() == 'tt'
+
+
 def test_add_option_input_s3bucket():
     """Test that an S3 option can be added correctly."""
     location = tempfile.mkdtemp()
@@ -25,6 +37,13 @@ def test_add_option_input_s3bucket():
     test_config.add_option_inputs_S3bucket("bucket_value")
     assert test_config.get_S3bucket_name() == "bucket_value"
 
+
+def test_add_option_inputs_root():
+    location = tempfile.mkdtemp()
+    test_config = Config(location)
+
+    assert test_config.get_inputs_root() == ''
+    
 
 def test_write():
     """Check that file is written out."""
