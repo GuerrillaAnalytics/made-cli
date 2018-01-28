@@ -18,12 +18,11 @@ def test_cli(runner):
     result = runner.invoke(cli.cli)
     assert result.exit_code == 0
     assert not result.exception
-    # assert result.output.strip() == 'Hello, world.'
-    print(result.output.strip())
 
 
 def test_cli_unconfigured_folder(runner):
-    #
-    #     with runner.isolated_filesystem():
-    #         result=runner.invoke()
-    pass
+    with runner.isolated_filesystem():
+        result = runner.invoke(cli.cli, ['project'])
+        assert result.exit_code == 1
+        # assert result.output ==
+        # 'Do you want to configure a project here? [y/N]:\n'

@@ -3,7 +3,9 @@ import os
 
 import click
 
-from made.commands.project_grp import project_cmd_functions
+from made.cmds.project_grp import project_cmd_functions
+from made.cmds.project_grp.project_cmd_functions \
+    import project_configure_project_name
 
 
 @click.group()
@@ -21,6 +23,7 @@ def project_configure(ctx, folder):
     logging.getLogger('my logger'). \
         debug('Configuring project in: ' + folder)
 
+    project_configure_project_name(folder)
     project_cmd_functions.project_configure(folder)
 
     # project_functions.project_create_folder_structures(project_folder_path=folder)

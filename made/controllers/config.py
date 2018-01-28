@@ -75,6 +75,18 @@ class Config(object):
                 .debug("S3 bucket name not specified yet")
             return ''
 
+    def add_option_s3_encryption(self, value):
+        self.config[self.section_inputs]['sse'] = value
+        pass
+
+    def get_option_s3_encryption(self):
+        try:
+            result = self.config[self.section_inputs]['sse']
+            return result
+        except KeyError:
+            logging.getLogger('my logger').debug('SSE not specified yet')
+            return ''
+
     def get_inputs_root(self):
 
         try:

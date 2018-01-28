@@ -4,8 +4,8 @@ import os
 import shutil
 import tempfile
 
-from made.commands.inputs_grp.input_functions import validate_input_version
-from made.controllers.inputs.inputs_functions import input_audit_path
+from made.controllers.inputs.inputs_functions \
+    import input_audit_path, validate_input_version
 
 
 def test_validate_input_version():
