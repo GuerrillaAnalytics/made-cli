@@ -134,8 +134,10 @@ def project_configure_project_name(folder):
 
 
 def project_configure(folder):
-
     configuration = Config(folder)
+
+    # Enter project name
+    project_configure_project_name(folder)
 
     # Enter a work product prefix
     while True:
@@ -188,9 +190,11 @@ def project_configure(folder):
                 logging.getLogger('my logger').debug("SSE set to: " + sse)
                 configuration.add_option_s3_encryption(sse)
 
+                break
+
         else:
             logging.getLogger('my logger').debug(
-                'Prompting for file root option')
+                'Not implemented prompting for file root option')
             logging.getLogger('my logger').error('Not implemented')
         break
 
