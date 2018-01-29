@@ -169,7 +169,7 @@ def project_configure(folder):
         if input_root == 's3':
             while True:
                 # Bucket name
-                bucket_name = configuration.get_S3bucket_name()
+                bucket_name = configuration.get_option_s3_bucket_name()
                 bucket_name = click.prompt(
                     "Enter s3 bucket name", type=str, default=bucket_name)
                 logging.getLogger('my logger').debug(

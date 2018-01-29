@@ -65,7 +65,7 @@ class Config(object):
     def add_option_inputs_S3bucket(self, option_value):
         self.config[self.section_inputs]['bucket'] = option_value
 
-    def get_S3bucket_name(self):
+    def get_option_s3_bucket_name(self):
 
         try:
             result = self.config[self.section_inputs]['bucket']
@@ -73,6 +73,19 @@ class Config(object):
         except KeyError:
             logging.getLogger('my logger') \
                 .debug("S3 bucket name not specified yet")
+            return ''
+
+    def add_option_s3_profile(self, value):
+        self.config[self.section_inputs]['profile'] = value
+        pass
+
+    def get_option_s3_profile(self):
+        try:
+            result = self.config[self.section_inputs]['profile']
+            return result
+        except KeyError:
+            logging.getLogger('my logger') \
+                .debug('S3 profile not specified yet')
             return ''
 
     def add_option_s3_encryption(self, value):

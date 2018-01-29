@@ -9,7 +9,7 @@ def test_create_folder_path():
     """Test the input folder path creation."""
     folder_path = \
         input_manager_factory.create_folder_path(
-            project_folder_name="my_project", source_id=45,
+            project_name="my_project", source_id=45,
             source_label="customer",
             version="05")
 

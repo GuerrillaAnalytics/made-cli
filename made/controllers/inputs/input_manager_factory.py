@@ -3,17 +3,20 @@ import logging
 
 import boto3
 import botocore
+
 from made.controllers.config import Config
 
 
-def create_folder_path(project_folder_name, source_id, source_label, version):
-    """Create the full folder path to an input"""
+def create_folder_path(project_name, source_id, source_label, version):
+    """
+    Create the full folder path to an input
+    """
 
     # Ensure there is a trailing / so a folder is created in S3
     # instead of a file
     s = \
         "/".join(
-            ["projects", project_folder_name,
+            ["projects", project_name,
              "inputs",
              str(source_id) + "_" + source_label,
              version, "raw", "data",
@@ -84,7 +87,6 @@ class FileInputManager(InputManager):
 
 
 class S3InputManager(InputManager):
-
     def create_new_source(self, source_id, source_label):
         """Create a new S3 source folder"""
 
@@ -99,23 +101,23 @@ class S3InputManager(InputManager):
             import validate_source_label
         validate_source_label(source_label)
 
-        # TODO Build path to new source
-        project_name = 'enda'
+        # Build path to new source
         project_name = self.configuration.get_project_name()
         version = "01"
         s = create_folder_path(project_name, source_id, source_label, version)
         logging.getLogger('my logger').debug("s3 input folder: " + s)
+
         # TODO Check new source does not exist already
-        # TODO Create new folder at target path
-        # TODO add first version and subfolder
-        dev = boto3.session.Session(profile_name='dpp1')
+        # Create new folder at target path
+        # add first version and subfolder
+        dev = boto3.session.Session(profile_name=self.configuration.get_option_s3_profile())
         client = dev.client('s3')
         try:
             response = client.put_object(
-                Bucket=self.configuration.get_S3bucket_name(),
+                Bucket=self.configuration.get_option_s3_bucket_name(),
                 Body='',
                 Key=s,
-                ServerSideEncryption='AES256')
+                ServerSideEncryption=self.configuration.get_option_s3_encryption())
             logging.getLogger('my logger').info(response)
         except botocore.exceptions.ClientError:
             logging.getLogger('my logger') \

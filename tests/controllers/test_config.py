@@ -35,7 +35,7 @@ def test_add_option_input_s3bucket():
     location = tempfile.mkdtemp()
     test_config = Config(location)
     test_config.add_option_inputs_S3bucket("bucket_value")
-    assert test_config.get_S3bucket_name() == "bucket_value"
+    assert test_config.get_option_s3_bucket_name() == "bucket_value"
 
 
 def test_add_option_inputs_root():
