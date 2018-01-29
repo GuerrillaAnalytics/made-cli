@@ -8,6 +8,18 @@ from made.controllers.config import Config
 from made.controllers.inputs import input_manager_factory
 
 
+def validate_source_label(source_label):
+    """Check that a source label has correct format"""
+    pattern = re.compile("^[a-z0-9_]*$")
+    match_result = re.match(pattern, source_label)
+    if match_result is None:
+        return False
+    else:
+        logging.getLogger('my logger').debug(
+            "Matched: " + str(match_result.group(0)))
+        return True
+
+
 def input_audit_path(input_base_folder):
     """Audit an input folder to check it
     has the right path formats
@@ -91,6 +103,9 @@ def format_input_version(input_version):
 
 
 def cmd_input_create():
+    """
+    Gather the parameters needed to create an input folder
+    """
     while True:
         user_source_id = click.prompt('Please enter an input ID', type=str)
         if not validate_input_version(user_source_id):

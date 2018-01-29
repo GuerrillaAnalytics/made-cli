@@ -3,7 +3,6 @@ import logging
 
 import boto3
 import botocore
-
 from made.controllers.config import Config
 
 
@@ -85,6 +84,7 @@ class FileInputManager(InputManager):
 
 
 class S3InputManager(InputManager):
+
     def create_new_source(self, source_id, source_label):
         """Create a new S3 source folder"""
 
@@ -93,7 +93,12 @@ class S3InputManager(InputManager):
         logging.getLogger("my logger").debug(
             "Inputs root is: " + inputs_root)
         # TODO Check the source ID is provided and correct
-        # TODO Check the source label is provided and correct
+
+        # Check the source label is provided and correct
+        from made.controllers.inputs.inputs_functions \
+            import validate_source_label
+        validate_source_label(source_label)
+
         # TODO Build path to new source
         project_name = 'enda'
         project_name = self.configuration.get_project_name()

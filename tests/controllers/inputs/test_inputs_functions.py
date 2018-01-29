@@ -5,7 +5,7 @@ import shutil
 import tempfile
 
 from made.controllers.inputs.inputs_functions \
-    import input_audit_path, validate_input_version
+    import input_audit_path, validate_input_version, validate_source_label
 
 
 def test_validate_input_version():
@@ -69,3 +69,24 @@ def test_input_audit_path_empty_subfolder():
 
     assert len(result) >= 1
     assert result[0][0] == "ERR0003"
+
+
+def test_validate_source_label():
+
+    # valid name
+    assert validate_source_label('transactions') is True
+
+    # spaces are not valid
+    assert validate_source_label('transactions table') is False
+
+    # special characters are not valid
+    assert validate_source_label('#') is False
+    assert validate_source_label('!') is False
+    assert validate_source_label('@') is False
+    assert validate_source_label('$') is False
+    assert validate_source_label('%') is False
+    assert validate_source_label('^') is False
+    assert validate_source_label('&') is False
+    assert validate_source_label('*') is False
+    assert validate_source_label('(') is False
+    assert validate_source_label(')') is False
