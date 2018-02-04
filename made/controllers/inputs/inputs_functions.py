@@ -134,6 +134,6 @@ def input_new_version():
         input_source = click.prompt('Choose an existing input:', type=int)
         config = Config(os.getcwd())
         input_manager = input_manager_factory.InputManagerFactory.create(config)
-        input_manager.list_inputs()
+        inputs = input_manager.list_inputs()
         logging.getLogger('my logger').error('Not implemented yet')
     return None

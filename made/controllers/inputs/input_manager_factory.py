@@ -169,6 +169,7 @@ class S3InputManager(InputManager):
         print("not implemented yet")
 
 
+
 if __name__ == "__main__":
     # Create object using factory.
     # config=Config(os.getcwd())
