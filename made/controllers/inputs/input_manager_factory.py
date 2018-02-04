@@ -7,23 +7,6 @@ import botocore
 from made.controllers.config import Config
 
 
-def create_folder_path(project_name, source_id, source_label, version):
-    """
-    Create the full folder path to an input
-    """
-
-    # Ensure there is a trailing / so a folder is created in S3
-    # instead of a file
-    s = \
-        "/".join(
-            ["projects", project_name,
-             "inputs",
-             str(source_id) + "_" + source_label,
-             version, "raw", "data",
-             ""])
-    return s
-
-
 class InputManagerFactory(object):
     """
     Class to manage creation of appropriate input managers
@@ -49,6 +32,22 @@ class InputManager(abc.ABC):
     def __init__(self, config):
         self.configuration = config
         pass
+
+    def create_folder_path(self, project_name, source_id, source_label, version):
+        """
+        Create the full folder path to an input
+        """
+
+        # Ensure there is a trailing / so a folder is created in S3
+        # instead of a file
+        s = \
+            "/".join(
+                ["projects", project_name,
+                 "inputs",
+                 str(source_id) + "_" + source_label,
+                 version, "raw", "data",
+                 ""])
+        return s
 
     @abc.abstractmethod
     def create_new_source(self):
@@ -104,7 +103,7 @@ class S3InputManager(InputManager):
         # Build path to new source
         project_name = self.configuration.get_project_name()
         version = "01"
-        s = create_folder_path(project_name, source_id, source_label, version)
+        s = self.create_folder_path(project_name, source_id, source_label, version)
         logging.getLogger('my logger').debug("s3 input folder: " + s)
 
         # TODO Check new source does not exist already
