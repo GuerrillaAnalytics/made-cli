@@ -58,9 +58,24 @@ class Config(object):
             return ""
 
     def add_option_inputs_root(self, option_value='s3'):
-        """Input folder type (S3 or file)"""
+        """Input folder root type (S3 or file)"""
 
         self.config[self.section_inputs]['root'] = option_value
+
+    def add_option_files_root(self, option_value):
+        """Parent location where all projects exist"""
+        self.config[self.section_inputs]['files_root'] = option_value
+        pass
+
+    def get_option_files_root(self):
+
+        try:
+            result = self.config[self.section_inputs]['files_root']
+            return result
+        except KeyError:
+            logging.getLogger('my logger') \
+                .debug("Files root not configured yet")
+            return ''
 
     def add_option_inputs_S3bucket(self, option_value):
         self.config[self.section_inputs]['bucket'] = option_value
@@ -72,7 +87,7 @@ class Config(object):
             return result
         except KeyError:
             logging.getLogger('my logger') \
-                .debug("S3 bucket name not specified yet")
+                .debug("S3 bucket name not configured yet")
             return ''
 
     def add_option_s3_profile(self, value):

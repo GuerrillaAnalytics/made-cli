@@ -1,5 +1,6 @@
 import abc
 import logging
+import os
 
 import boto3
 import botocore
@@ -35,7 +36,7 @@ class InputManager(abc.ABC):
 
     def create_folder_path(self, project_name, source_id, source_label, version):
         """
-        Create the full folder path to an input
+        Create the full folder path to an input starting at 'projects'
         """
 
         # Ensure there is a trailing / so a folder is created in S3
@@ -50,7 +51,7 @@ class InputManager(abc.ABC):
         return s
 
     @abc.abstractmethod
-    def create_new_source(self):
+    def create_new_source(self, source_id, source_label):
         """
         Create an input source within an
         input folder with the right folder path and structure
@@ -72,11 +73,32 @@ class InputManager(abc.ABC):
 
 
 class FileInputManager(InputManager):
-    def __init__(self):
-        pass
+    def create_new_source(self, source_id, source_label):
+        # TODO Get the root path for the input and check it exists
+        inputs_root = self.configuration.get_inputs_root()
+        logging.getLogger("my logger").debug(
+            "Inputs root is: " + inputs_root)
+        # TODO Check the source ID is provided and correct
 
-    def create_new_source(self):
-        print("not implemented yet")
+        # Check the source label is provided and correct
+        from made.controllers.inputs.inputs_functions \
+            import validate_source_label
+        validate_source_label(source_label)
+
+        # Build path to new source
+        project_name = self.configuration.get_project_name()
+        version = "01"
+        s = self.create_folder_path(project_name, source_id, source_label, version)
+        s = os.path.join(self.configuration.get_option_files_root(), s)
+        print("path is: " + s)
+        if not os.path.exists(s):
+            try:
+                os.makedirs(s)
+                logging.getLogger('my logger'). \
+                    debug("FileInputManager created file input folder: " + s)
+            except Exception as e:
+                logging.getLogger('my logger'). \
+                    exception("Could not create new source at " + s)
 
     def create_new_source_version(self):
         print("not implemented yet")
@@ -109,7 +131,8 @@ class S3InputManager(InputManager):
         # TODO Check new source does not exist already
         # Create new folder at target path
         # add first version and subfolder
-        dev = boto3.session.Session(profile_name=self.configuration.get_option_s3_profile())
+        profile_name_configured = self.configuration.get_option_s3_profile()
+        dev = boto3.session.Session(profile_name=profile_name_configured)
         client = dev.client('s3')
         try:
             response = client.put_object(
