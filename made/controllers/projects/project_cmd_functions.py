@@ -194,8 +194,14 @@ def project_configure(folder):
 
         else:
             logging.getLogger('my logger').debug(
-                'Not implemented prompting for file root option')
-            logging.getLogger('my logger').error('Not implemented')
+                'Configuring file root option')
+            file_root = configuration.get_option_files_root()
+            file_root = click.prompt("Enter a file path to parent of projects folder",
+                                     type=click.Path(exists=True, writable=True),
+                                     default=file_root)
+
+            logging.getLogger('my logger').debug("File root set to: " + file_root)
+            configuration.add_option_files_root(file_root)
         break
 
     # save the configuration
