@@ -71,6 +71,11 @@ class InputManager(abc.ABC):
         """Do sense checks on given input folder"""
         pass
 
+    @abc.abstractmethod
+    def list_inputs(self):
+        """List all inputs in a project."""
+        pass
+
 
 class FileInputManager(InputManager):
     def create_new_source(self, source_id, source_label):
@@ -106,8 +111,15 @@ class FileInputManager(InputManager):
     def audit(self):
         print("not implemented yet")
 
+    def list_inputs(self):
+        print("not implemented yet")
+
 
 class S3InputManager(InputManager):
+    """
+    Class for managing inputs folders on S3
+    """
+
     def create_new_source(self, source_id, source_label):
         """Create a new S3 source folder"""
 
@@ -151,6 +163,9 @@ class S3InputManager(InputManager):
         print("not implemented yet")
 
     def audit(self):
+        print("not implemented yet")
+
+    def list_inputs(self):
         print("not implemented yet")
 
 

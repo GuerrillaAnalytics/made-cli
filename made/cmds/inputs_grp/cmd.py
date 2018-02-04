@@ -1,3 +1,4 @@
+import logging
 import os
 
 import click
@@ -29,4 +30,12 @@ def input_create(ctx):
 def input_audit(ctx):
     audit_result = inputs_functions.input_audit_path(os.getcwd())
     utils.pretty_print(audit_result)
+    pass
+
+
+@input.command('new_version')
+@click.pass_obj
+def input_new_version(ctx):
+    result = inputs_functions.input_new_version()
+    logging.getLogger('my logger').debug("Created version " + str(result))
     pass
