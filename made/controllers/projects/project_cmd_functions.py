@@ -165,7 +165,7 @@ def project_configure(folder):
         if " " in input_root:
             continue
 
-        configuration.add_option_inputs_root(input_root)
+        configuration.add_option_inputs_storage(input_root)
 
         # if S3, grab the bucket name
         if input_root == 's3':

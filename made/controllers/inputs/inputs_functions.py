@@ -132,8 +132,9 @@ def cmd_input_create():
 def input_new_version():
     while True:
         input_source = click.prompt('Choose an existing input:', type=int)
+        logging.getLogger('my logger').debug('Source: ' + input_source)
         config = Config(os.getcwd())
         input_manager = input_manager_factory.InputManagerFactory.create(config)
-        inputs = input_manager.list_inputs()
+        # inputs = input_manager.list_inputs()
         logging.getLogger('my logger').error('Not implemented yet')
     return None

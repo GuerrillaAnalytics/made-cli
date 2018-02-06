@@ -42,7 +42,7 @@ def test_add_option_inputs_root():
     location = tempfile.mkdtemp()
     test_config = Config(location)
 
-    assert test_config.get_inputs_root() == ''
+    assert test_config.get_option_inputs_storage() == ''
 
 
 def test_write():

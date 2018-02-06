@@ -57,11 +57,6 @@ class Config(object):
                 .debug("wp prefix not specified yet")
             return ""
 
-    def add_option_inputs_root(self, option_value='s3'):
-        """Input folder root type (S3 or file)"""
-
-        self.config[self.section_inputs]['root'] = option_value
-
     def add_option_files_root(self, option_value):
         """Parent location where all projects exist"""
         self.config[self.section_inputs]['files_root'] = option_value
@@ -115,10 +110,15 @@ class Config(object):
             logging.getLogger('my logger').debug('SSE not specified yet')
             return ''
 
-    def get_inputs_root(self):
+    def add_option_inputs_storage(self, option_value='s3'):
+        """Input folder root type (S3 or file)"""
+
+        self.config[self.section_inputs]['inputs_storage'] = option_value
+
+    def get_option_inputs_storage(self):
 
         try:
-            result = self.config[self.section_inputs]['root']
+            result = self.config[self.section_inputs]['inputs_storage']
             return result
         except KeyError:
             return ''
