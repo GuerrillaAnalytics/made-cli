@@ -11,6 +11,7 @@ from made.controllers.inputs.inputs_functions import cmd_input_create
 @click.group()
 @click.pass_context
 def input(ctx):
+    """Commands for managing input sources"""
     pass
 
 
@@ -20,6 +21,7 @@ def input(ctx):
 # @click.argument('url')
 @click.pass_obj
 def input_create(ctx):
+    """Create a new input source"""
     cmd_input_create()
 
     pass
@@ -36,6 +38,7 @@ def input_audit(ctx):
 @input.command('new_version')
 @click.pass_obj
 def input_new_version(ctx):
+    """Create a new version of an existing input"""
     result = inputs_functions.input_new_version()
     logging.getLogger('my logger').debug("Created version " + str(result))
     pass
