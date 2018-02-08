@@ -130,11 +130,21 @@ def cmd_input_create():
 
 
 def input_new_version():
+    """Create a new version of an existing input source"""
     while True:
-        input_source = click.prompt('Choose an existing input:', type=int)
-        logging.getLogger('my logger').debug('Source: ' + input_source)
         config = Config(os.getcwd())
         input_manager = input_manager_factory.InputManagerFactory.create(config)
-        # inputs = input_manager.list_inputs()
+
+        # create a List of all input sources
+        inputs = input_manager.listInputs(project_name=config.get_project_name())
+
+        # page the list of inputs to choose from
+        click.echo_via_pager('\n'.join('%s' % input for input in inputs))
+
+        input_source = click.prompt('Choose an existing input:', type=int)
+        logging.getLogger('my logger').debug('Source: ' + input_source)
+
         logging.getLogger('my logger').error('Not implemented yet')
+
+        break
     return None

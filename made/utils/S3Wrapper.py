@@ -1,5 +1,5 @@
 import boto3
-
+import logging
 
 class S3Wrapper():
     """
@@ -36,15 +36,18 @@ class S3Wrapper():
         """Create a list of all files and folders under
         a project
         """
-        return self.getBucket().objects.filter(Prefix=prefix_filter)
+        buckets = self.getBucket().objects.filter(Prefix=prefix_filter)
+
+        return buckets
 
     def listFolders(self, parent_key):
         all_keys = self.getBucket().objects \
             .filter(Prefix=parent_key)
 
+        # add 1 to go to the level below the given key
         stop_at = parent_key.count('/') + 1
-        print('Folder parent key:' + parent_key)
-        print('stop-at' + str(stop_at))
+        logging.getLogger('my logger').debig('Folder parent key:' + parent_key)
+
         unique_versions = list(set({self.truncate_key(obj.key, stop_at) for obj in all_keys}))
         unique_versions.sort()
 

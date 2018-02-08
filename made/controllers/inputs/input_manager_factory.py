@@ -15,7 +15,7 @@ class InputManagerFactory(object):
     """
 
     def create(config):
-        storage_type = config.config.get_option_inputs_storage()
+        storage_type = config.get_option_inputs_storage()
 
         if storage_type == "s3":
             logging.getLogger("my logger").debug(
@@ -26,7 +26,7 @@ class InputManagerFactory(object):
                 "Creating a file input manager")
             return FileInputManager(config)
         else:
-            logging.getLogger("Bad manager creation: " + storage_type)
+            logging.getLogger('my logger').error("Bad input manager creation: " + storage_type)
 
     factory = staticmethod(create)
 
@@ -74,7 +74,7 @@ class InputManager(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def list_inputs(self):
+    def listInputs(self, project_name):
         """List all inputs in a project."""
         pass
 
@@ -113,7 +113,7 @@ class FileInputManager(InputManager):
     def audit(self):
         print("not implemented yet")
 
-    def list_inputs(self):
+    def listInputs(self, project_name):
         print("not implemented yet")
 
 
@@ -141,6 +141,7 @@ class S3InputManager(InputManager):
         prefix = "projects/" + project_name + '/inputs/'
 
         unique_inputs = s3_wrapper.listFolders(prefix)
+
         return unique_inputs
 
     def create_new_source(self, source_id, source_label):
