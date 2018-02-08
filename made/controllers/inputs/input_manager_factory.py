@@ -6,6 +6,7 @@ import boto3
 import botocore
 
 from made.controllers.config import Config
+from made.utils.S3Wrapper import S3Wrapper
 
 
 class InputManagerFactory(object):
@@ -121,6 +122,27 @@ class S3InputManager(InputManager):
     Class for managing inputs folders on S3
     """
 
+    def listInputVersions(self, project_name, input_source):
+        """Create a list of keys of just the input versions within a given source"""
+
+        s3_wrapper = S3Wrapper(self.configuration.get_option_s3_bucket_name
+                               , self.configuration.get_option_s3_profile)
+        prefix_path = "projects/" + project_name + '/inputs/' + input_source + '/'
+        print("Prefix path: " + prefix_path)
+        unique_versions = s3_wrapper.listFolders(parent_key=prefix_path)
+
+        return unique_versions
+
+    def listInputs(self, project_name):
+        """Create a list of keys of just the input folders in a project"""
+
+        s3_wrapper = S3Wrapper(self.configuration.get_option_s3_bucket_name
+                               , self.configuration.get_option_s3_profile)
+        prefix = "projects/" + project_name + '/inputs/'
+
+        unique_inputs = s3_wrapper.listFolders(prefix)
+        return unique_inputs
+
     def create_new_source(self, source_id, source_label):
         """Create a new S3 source folder"""
 
@@ -181,4 +203,8 @@ class S3InputManager(InputManager):
 
 if __name__ == "__main__":
     config = Config(os.getcwd())
+    config.add_option_files_root('s3')
+    config.add_option_inputs_S3bucket('js-dpp-lab-ds1-data-dev')
+    config.add_option_s3_profile('dpp1')
+    config.add_option_project_name()
     test = S3InputManager(config)

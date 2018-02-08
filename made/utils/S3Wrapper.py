@@ -1,5 +1,4 @@
 import boto3
-import logging
 
 
 class S3Wrapper():
@@ -8,16 +7,9 @@ class S3Wrapper():
     Guerrilla Analytics conventions
     """
 
-    def getLastItemInKey(self, key):
-        """
-        Assumes key ends with / which is fairly safe with
-        S3 keys retrieved from boto3
-        """
-        return key.rsplit('/', 2)[1]
-
     def truncate_key(self, object_key, depth):
         """
-        based on
+        Based on
         https://stackoverflow.com/questions/17060039/
         split-string-at-nth-occurrence-of-a-given-character
         """
@@ -46,25 +38,14 @@ class S3Wrapper():
         """
         return self.getBucket().objects.filter(Prefix=prefix_filter)
 
-    def listInputs(self, project_name):
-        """Create a list of keys of just the input folders in a project"""
-        all_inputs = self.getBucket().objects \
-            .filter(Prefix="projects/" + project_name + '/inputs/')
+    def listFolders(self, parent_key):
+        all_keys = self.getBucket().objects \
+            .filter(Prefix=parent_key)
 
-        unique_inputs = list(set({self.truncate_key(obj.key, 4) for obj in all_inputs}))
-        unique_inputs.sort()
-
-        return unique_inputs
-
-    def listInputVersions(self, project_name, input_source):
-        """Create a list of keys of just the input versions within a given source"""
-
-        prefix_path = "projects/" + project_name + '/inputs/' + input_source + '/'
-        print("Prefix path: " + prefix_path)
-        all_inputs = self.getBucket().objects \
-            .filter(Prefix=prefix_path)
-
-        unique_versions = list(set({self.truncate_key(obj.key, 5) for obj in all_inputs}))
+        stop_at = parent_key.count('/') + 1
+        print('Folder parent key:' + parent_key)
+        print('stop-at' + str(stop_at))
+        unique_versions = list(set({self.truncate_key(obj.key, stop_at) for obj in all_keys}))
         unique_versions.sort()
 
         return unique_versions
@@ -81,13 +62,7 @@ if __name__ == "__main__":
     for obj in contents:
         print('{0}:{1}'.format(s3.getBucket().name, obj.key))
 
-    print("List inputs:")
-    inputs = s3.listInputs('ds044_depot_optimisation')
-    for obj in inputs:
-        print('{0}:{1}'.format(s3.getBucket().name, obj))
-
-    source = s3.getLastItemInKey(inputs[2])
-    print("Versions for: " + source)
-    versions = s3.listInputVersions('ds044_depot_optimisation', source)
-    for obj in versions:
-         print('{0}:{1}'.format(s3.getBucket().name, obj))
+    print("All inputs")
+    folders = s3.listFolders(parent_key='projects/ds044_depot_optimisation/inputs/')
+    for key in folders:
+        print('{0}:{1}'.format(s3.getBucket().name, key))
