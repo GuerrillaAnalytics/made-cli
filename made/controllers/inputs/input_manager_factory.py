@@ -6,6 +6,7 @@ import boto3
 import botocore
 
 from made.controllers.config import Config
+from made.exceptions.madeExceptions import InputException
 from made.utils.S3Wrapper import S3Wrapper
 
 
@@ -27,6 +28,7 @@ class InputManagerFactory(object):
             return FileInputManager(config)
         else:
             logging.getLogger('my logger').error("Bad input manager creation: " + storage_type)
+            raise InputException(msg="The input storage type was empty in the configuration file")
 
     factory = staticmethod(create)
 
@@ -125,8 +127,8 @@ class S3InputManager(InputManager):
     def listInputVersions(self, project_name, input_source):
         """Create a list of keys of just the input versions within a given source"""
 
-        s3_wrapper = S3Wrapper(self.configuration.get_option_s3_bucket_name
-                               , self.configuration.get_option_s3_profile)
+        s3_wrapper = S3Wrapper(self.configuration.get_option_s3_bucket_name,
+                               self.configuration.get_option_s3_profile)
         prefix_path = "projects/" + project_name + '/inputs/' + input_source + '/'
         print("Prefix path: " + prefix_path)
         unique_versions = s3_wrapper.listFolders(parent_key=prefix_path)
@@ -136,8 +138,8 @@ class S3InputManager(InputManager):
     def listInputs(self, project_name):
         """Create a list of keys of just the input folders in a project"""
 
-        s3_wrapper = S3Wrapper(self.configuration.get_option_s3_bucket_name
-                               , self.configuration.get_option_s3_profile)
+        s3_wrapper = S3Wrapper(self.configuration.get_option_s3_bucket_name,
+                               self.configuration.get_option_s3_profile)
         prefix = "projects/" + project_name + '/inputs/'
 
         unique_inputs = s3_wrapper.listFolders(prefix)

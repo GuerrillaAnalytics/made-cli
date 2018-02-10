@@ -35,7 +35,7 @@ def input_audit(ctx):
     pass
 
 
-@input.command('new_version')
+@input.command('version')
 @click.pass_obj
 def input_new_version(ctx):
     """Create a new version of an existing input source"""

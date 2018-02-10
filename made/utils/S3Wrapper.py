@@ -1,6 +1,7 @@
 import boto3
 import logging
 
+
 class S3Wrapper():
     """
     Convenience wrapper around S3. Tailored to managing S3 structures using

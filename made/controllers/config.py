@@ -3,6 +3,8 @@ import os
 
 from configobj import ConfigObj
 
+from made.exceptions import madeExceptions
+
 
 class Config(object):
     """
@@ -18,6 +20,7 @@ class Config(object):
     def __init__(self, folder):
         self.project_folder = folder
         self.config = ConfigObj(os.path.join(folder, self.config_file_name))
+        logging.getLogger('my logger').debug("Reading configuration from: " + self.config.filename)
 
         # Make sure all sections exist to avoid errors later
         self.config[self.section_project] = {}
@@ -113,22 +116,33 @@ class Config(object):
     def add_option_inputs_storage(self, option_value='s3'):
         """Input folder root type (S3 or file)"""
 
+        logging.getLogger('my logger').debug("Set inputs_storage value to: " + option_value)
         self.config[self.section_inputs]['inputs_storage'] = option_value
 
     def get_option_inputs_storage(self):
 
         try:
-            result = self.config[self.section_inputs]['inputs_storage']
+            result = self.config[self.section_inputs]["inputs_storage"]
             return result
         except KeyError:
-            return ''
+            raise madeExceptions.MadeException("No configuration file key for 'inputs_storage'")
 
     def write(self):
         self.config.write()
+
+    def print(self):
+        for section in self.config:
+            for key in self.config.sections(section):
+                print(section)
+                print(key)
 
 
 if __name__ == '__main__':
     c = Config(os.getcwd())
     print(c.config_file_name)
     c.add_option_inputs_S3bucket('my-bucket')
+    c.print()
+    c.add_option_inputs_storage('s3')
+    print("Get options: " + c.get_option_inputs_storage())
+
     c.write()

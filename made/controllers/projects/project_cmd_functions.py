@@ -157,10 +157,10 @@ def project_configure(folder):
     while True:
         input_root = \
             click.prompt(
-                "Enter the input folder root [s3/file]",
+                "Enter the input storate type [s3/file]",
                 type=click.Choice(["s3", "file"]), default="s3")
         logging.getLogger('my logger').debug(
-            "Input root was set to: " + input_root)
+            "Input storage was set to: " + input_root)
 
         if " " in input_root:
             continue

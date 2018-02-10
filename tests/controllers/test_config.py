@@ -3,7 +3,10 @@
 import os
 import tempfile
 
+import pytest
+
 from made.controllers.config import Config
+from made.exceptions.madeExceptions import MadeException
 
 
 def test_constructor():
@@ -38,11 +41,17 @@ def test_add_option_input_s3bucket():
     assert test_config.get_option_s3_bucket_name() == "bucket_value"
 
 
-def test_add_option_inputs_root():
+def test_add_option_inputs_storage():
     location = tempfile.mkdtemp()
     test_config = Config(location)
 
-    assert test_config.get_option_inputs_storage() == ''
+    # check exception is raised when no value has been set
+    with pytest.raises(MadeException):
+        test_config.get_option_inputs_storage()
+
+    # test that value is returned after it has been set
+    test_config.add_option_inputs_storage(option_value='s3')
+    assert test_config.get_option_inputs_storage() == 's3'
 
 
 def test_write():
