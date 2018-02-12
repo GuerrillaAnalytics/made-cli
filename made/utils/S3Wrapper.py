@@ -22,7 +22,11 @@ class S3Wrapper():
 
     def getBucket(self):
         """Get a reference to the Bucket resource"""
-        dev = boto3.session.Session(profile_name=self.profile_name)
+        if self.profile_name != '':
+            dev = boto3.session.Session(profile_name=self.profile_name)
+        else:
+            dev = boto3.session.Session()
+
         s3_resources = dev.resource('s3')
         bucket = s3_resources.Bucket(self.bucket_name)
         return bucket
@@ -47,7 +51,7 @@ class S3Wrapper():
 
         # add 1 to go to the level below the given key
         stop_at = parent_key.count('/') + 1
-        logging.getLogger('my logger').debig('Folder parent key:' + parent_key)
+        logging.getLogger('my logger').debug('Folder parent key:' + parent_key)
 
         unique_versions = list(set({self.truncate_key(obj.key, stop_at) for obj in all_keys}))
         unique_versions.sort()
