@@ -11,3 +11,6 @@ get-pip.py
 .coverage
 .idea
 .cache
+env/
+made.config
+.pytest_cache/
